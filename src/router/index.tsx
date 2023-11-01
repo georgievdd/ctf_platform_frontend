@@ -6,17 +6,9 @@ import Team from '../pages/team';
 import User from '../pages/user';
 import Event from '../pages/event';
 import Challenge from '../pages/challenge';
+import { PATH } from '../consts';
 
 
-export const PATH = {
-  LOGIN: '/login',
-  REGISTRATION: '/registration',
-  HOME: '/',
-  TEAM: '/team',
-  USER: '/user',
-  CHALLENGE: '/challenge',
-  EVENT: '/event',
-}
 
 export const Router = createBrowserRouter([
     {

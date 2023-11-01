@@ -15,3 +15,13 @@ export const MODE_STATE = {
   LIGHT: 'light',
   DARK: 'dark',
 }
+
+export const PATH = {
+  LOGIN: '/login',
+  REGISTRATION: '/registration',
+  HOME: '/',
+  TEAM: '/team',
+  USER: '/user',
+  CHALLENGE: '/challenge',
+  EVENT: '/event',
+}

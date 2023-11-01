@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import User from '../../services/user';
-import { PATH } from '../../router';
+import { PATH } from '../../consts';
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../../store/slices/auth';
 
@@ -28,15 +28,6 @@ export const Login = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    dispatch(setAuth({
-      id: '12312312',
-      team: 'goodWars',
-      name: 'Denis',
-      surname: 'Frilov',
-      admin: false,
-      bio: null,
-      email: '12312312@example.com',
-    }))
     navigate(PATH.HOME);
     // User.login(data.get('email') as string, data.get('password') as string);
   };

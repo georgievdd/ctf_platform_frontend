@@ -1,0 +1,24 @@
+--dto--
+
+
+interface IUser {
+  id: string;
+  name: string;
+  surname: string;
+  email: string;
+  admin: boolean;
+  team: null | string;
+  rating: string;
+}
+
+
+interface ITeam {
+  id: string;
+  rating: string;
+  name: string;
+  membersCount: number;
+  info: string;
+  contacts: string;
+};
+contacts - номер\тг\вк, что нибудь.
+info - скорее всего место работы\учебы 

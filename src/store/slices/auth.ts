@@ -13,9 +13,9 @@ const initialState: IUserStore = {
     team: 'goodWars',
     name: 'Denis',
     surname: 'Frilov',
-    admin: false,
-    bio: null,
+    admin: true,
     email: '12312312@example.com',
+    rating: '10'
   },
 };
 export const authSlice = createSlice({

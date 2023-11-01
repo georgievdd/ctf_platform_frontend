@@ -5,7 +5,7 @@ export interface IUser {
   email: string;
   admin: boolean;
   team: null | string;
-  bio: null | string;
+  rating: string;
 }
 
 export interface IUsersResponse {
