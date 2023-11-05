@@ -144,6 +144,10 @@ const links: ILink[] = [
         name: 'участники'
     },
     {
+        to: PATH.PUBLIC.TEAM,
+        name: 'команды'
+    },
+    {
         to: PATH.PUBLIC.EVENT,
         name: 'события'
     },
@@ -151,8 +155,4 @@ const links: ILink[] = [
         to: PATH.PUBLIC.CHALLENGE,
         name: 'соревнования'
     },
-    {
-        to: PATH.PUBLIC.TEAM,
-        name: 'команды'
-    }
 ];

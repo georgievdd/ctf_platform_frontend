@@ -4,6 +4,7 @@ interface IFieldConfig {
   field: string;
   name: string;
   type: 'text' | 'email' | 'password' | 'boolean' | 'number';
+  required?: boolean;
 }
 type FieldValueType = string | number | boolean;
 
@@ -26,6 +27,7 @@ export function useAddData(fields: IFieldInit[]): IUseObject {
 
   const initValues = fields.map((field): IUseField => ({
     field: field.field,
+    required: field.required,
     name: field.name,
     type: field.type,
     value: field.defaultValue,

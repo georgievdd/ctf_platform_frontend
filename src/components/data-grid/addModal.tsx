@@ -44,9 +44,10 @@ export default function AddModal<T>({
                       ?<Checkbox 
                         color='success'
                         onChange={() => addObject.onChange(field.field, !field.value)}
+                        required={field.required}
                       />
                       :<Input
-                        required={field.field === 'name' || field.field === 'email' || field.field === 'surname'}
+                        required={field.required}
                         onChange={(e) => addObject.onChange(field.field, e.target.value)}
                         value={field.value}
                         type={field.type}

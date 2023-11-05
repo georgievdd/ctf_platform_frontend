@@ -1,5 +1,6 @@
 import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import {
+  GridRowHeightReturnValue,
   DataGrid as MuiDataGrid,
   gridPageCountSelector,
   gridPageSelector,
@@ -22,7 +23,7 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 import AddModal from './addModal';
 import { IUseObject } from './useAddData';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 15;
 export default function DataGrid<IRow>({
   state,
   AddIcon,
@@ -30,6 +31,7 @@ export default function DataGrid<IRow>({
   addOnclick,
   onDelete,
   saveChanges,
+  cellList
 } : {
   state: UseDataGridParams<IRow>,
   AddIcon: OverridableComponent<SvgIconTypeMap<{}, "svg">>,
@@ -37,16 +39,17 @@ export default function DataGrid<IRow>({
   addOnclick: () => void,
   onDelete: (ids: string[]) => void,
   saveChanges: () => void,
+  cellList?: boolean,
 }) {
   const [showAdd, setShowAdd] = useState(false);
   const { rows, rowSelectionModel } = state;
   const [paginationModel, setPaginationModel] = React.useState({
-    pageSize: 10,
+    pageSize: PAGE_SIZE,
     page: 0,
   });
   const { theme } = useTheme();
   const containerStyle: React.CSSProperties = { 
-    maxHeight: '90vh',
+    // minHeight: '90vh',
     width: 'auto', 
     border: `2px solid ${theme.palette.mode === 'light' ? '#d9d9d9' : 'rgb(67, 67, 67)'}`,
     borderRadius: '10px',
@@ -82,6 +85,9 @@ export default function DataGrid<IRow>({
             }}
             autoHeight
             rowHeight={rows.length ? 50 : 230}
+            getRowHeight={params => (
+              cellList ? 150 : undefined
+            )}
             getRowClassName={params => rowSelectionModel.includes(params.id as string) ? classes.selectedRow : ''}
             {...state}
           />
@@ -272,7 +278,7 @@ function CustomNoRowsOverlay() {
           </g>
         </g>
       </svg>
-      <Typography variant='h4'>Пользователей нет</Typography>
+      <Typography variant='h4'>Пусто</Typography>
     </StyledGridOverlay>
   );
 }

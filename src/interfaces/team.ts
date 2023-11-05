@@ -1,7 +1,6 @@
 import { IUser } from "./user";
 
-export interface ITeam {
-  id: string;
+export interface ITeamBody {
   rating: string;
   name: string;
   members: IUser[];
@@ -9,4 +8,8 @@ export interface ITeam {
   contacts: string;
   captain: IUser;
   preview: string;
+}
+
+export interface ITeam extends ITeamBody {
+  id: string;
 };

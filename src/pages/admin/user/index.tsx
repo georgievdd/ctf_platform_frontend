@@ -9,7 +9,7 @@ import { IFieldInit, useAddData } from '../../../components/data-grid/useAddData
 
 const AdminUserPage = () => {
 
-  const [users, setUsers] = useState<IUser[]>([
+  const [data, setData] = useState<IUser[]>([
     {
       id: '123',
       team: [2, 6, 8, 2],
@@ -24,10 +24,10 @@ const AdminUserPage = () => {
   ///
   const [id, setId] = useState(100);
   ///
-  const dataState = useDataGrid<IUser>(users, columns);
-  const addObject = useAddData(addData);
-  const addUser = () => {
-    setUsers(prev => (
+  const dataState = useDataGrid<IUser>(data, columns);
+  const addObject = useAddData(addFields);
+  const add = () => {
+    setData(prev => (
       [...prev, {
         id: id.toString(),
         ...addObject.dto() as IUserBody,
@@ -37,7 +37,7 @@ const AdminUserPage = () => {
     setId(id + 1);
   }
   const onDelete = (ids: string[]) => {
-    setUsers(prev => prev.filter(user => !ids.includes(user.id)));
+    setData(prev => prev.filter(e => !ids.includes(e.id)));
   }
   const saveChanges = () => {
     console.log(dataState.changedRowsIds);
@@ -45,7 +45,7 @@ const AdminUserPage = () => {
 
   useEffect(() => {
     (async() => {
-      setUsers(await User.getAll());
+      setData(await User.getAll());
     })()
   }, []);
 
@@ -55,7 +55,7 @@ const AdminUserPage = () => {
         state={dataState}
         AddIcon={PersonAddIcon}
         addObject={addObject}
-        addOnclick={addUser}
+        addOnclick={add}
         onDelete={onDelete}
         saveChanges={saveChanges}
       />
@@ -71,12 +71,13 @@ const columns: GridColDef[] = [
     field: 'id', 
     headerName: 'ID',
     type: 'string',
-    flex: 1, 
+    // flex: 1, 
+    width: 20,
     // sortable: false,
   },
   {
     field: 'name',
-    headerName: 'First name',
+    headerName: 'Имя',
     type: 'string',
     editable: true,
     flex: 1,
@@ -84,7 +85,7 @@ const columns: GridColDef[] = [
   },
   {
     field: 'surname',
-    headerName: 'Last name',
+    headerName: 'Фамилия',
     type: 'string',
     editable: true,
     flex: 1,
@@ -125,18 +126,20 @@ const columns: GridColDef[] = [
     flex: 1,
   },
 ];
-const addData: IFieldInit[] = [
+const addFields: IFieldInit[] = [
   {
     field: 'name',
     name: 'Имя',
     type: 'text',
     defaultValue: '',
+    required: true,
   },
   {
     field: 'surname',
     name: 'Фамилия',
     type: 'text',
     defaultValue: '',
+    required: true,
   },
   {
     field: 'rating',
@@ -149,6 +152,7 @@ const addData: IFieldInit[] = [
     name: 'Email',
     type: 'email',
     defaultValue: '',
+    required: true,
   },
   {
     field: 'admin',
@@ -162,5 +166,4 @@ const addData: IFieldInit[] = [
     type: 'text',
     defaultValue: '',
   },
-  
 ];
