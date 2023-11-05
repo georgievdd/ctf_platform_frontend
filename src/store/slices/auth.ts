@@ -3,20 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../interfaces/user';
 import { useSelector } from 'react-redux';
 import type { IStore } from '..';
+import { userRaw } from '../../api/user';
 
 export interface IUserStore {
   user: IUser | null,
 };
 const initialState: IUserStore = {
-  user: {
-    id: '12312312',
-    team: 'goodWars',
-    name: 'Denis',
-    surname: 'Frilov',
-    admin: true,
-    email: '12312312@example.com',
-    rating: '10'
-  },
+  user: userRaw,
 };
 export const authSlice = createSlice({
   name: 'auth',

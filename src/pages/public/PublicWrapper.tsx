@@ -1,13 +1,13 @@
 import React from 'react'
-import { Header } from '../components/header'
-import { useAuth } from '../store/slices/auth'
+import { Header } from '../../components/header'
+import { useAuth } from '../../store/slices/auth'
 import { Outlet } from 'react-router-dom';
 import { Container } from '@mui/material'
-import {useTheme} from "../theme";
-import Footer from '../components/footer';
-import Space from '../components/space';
+import {useTheme} from "../../theme";
+import Footer from '../../components/footer';
+import Space from '../../components/space';
 
-const Wrapper = () => {
+const PublicWrapper = () => {
   const { user } = useAuth();
   const { colors } = useTheme();
 
@@ -23,4 +23,4 @@ const Wrapper = () => {
   )
 }
 
-export default Wrapper
+export default PublicWrapper

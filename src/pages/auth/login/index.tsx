@@ -12,10 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import User from '../../services/user';
-import { PATH } from '../../consts';
+import User from '../../../services/user';
+import { PATH } from '../../../consts';
 import { useDispatch } from 'react-redux';
-import { setAuth } from '../../store/slices/auth';
+import { setAuth } from '../../../store/slices/auth';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -28,7 +28,7 @@ export const Login = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    navigate(PATH.HOME);
+    navigate(PATH.PUBLIC.HOME);
     // User.login(data.get('email') as string, data.get('password') as string);
   };
 

@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
-import {useTheme} from "../../theme";
-import SearchAppBar from "../../components/search-input";
-import SearchInput from "../../components/search-input";
-import {useInput} from "../../hooks";
-import Space from "../../components/space";
-import { ITeam } from '../../interfaces/team';
-import TeamCard from '../../components/team-card';
+import {useTheme} from "../../../theme";
+import SearchAppBar from "../../../components/search-input";
+import SearchInput from "../../../components/search-input";
+import {useInput} from "../../../hooks";
+import Space from "../../../components/space";
+import { ITeam } from '../../../interfaces/team';
+import TeamCard from '../../../components/team-card';
 import { Container, Grid, Pagination } from '@mui/material';
-import TeamCardModal from '../../components/team-card/modal';
+import TeamCardModal from '../../../components/team-card/modal';
 
 const teams: ITeam[] = [
   {
@@ -21,12 +21,12 @@ const teams: ITeam[] = [
     preview: 'default',
     captain: {
       id: '12312312',
-      team: 'goodWars',
+      team: [12, 6, 3, 12],
       name: 'Denis',
       surname: 'Frilov',
       admin: true,
       email: '12312312@example.com',
-      rating: '10'
+      rating: 10
     }
   },
   {
@@ -39,12 +39,12 @@ const teams: ITeam[] = [
     preview: 'default',
     captain: {
       id: '12312312',
-      team: 'goodWars',
+      team: [12, 6, 3, 12],
       name: 'Denis',
       surname: 'Frilov',
       admin: true,
       email: '12312312@example.com',
-      rating: '10'
+      rating: 10
     }
   },
   {
@@ -57,12 +57,12 @@ const teams: ITeam[] = [
     preview: 'default',
     captain: {
       id: '12312312',
-      team: 'goodWars',
+      team: [12, 6, 3, 12],
       name: 'Denis',
       surname: 'Frilov',
       admin: true,
       email: '12312312@example.com',
-      rating: '10'
+      rating: 10
     }
   },
   {
@@ -75,12 +75,12 @@ const teams: ITeam[] = [
     preview: 'default',
     captain: {
       id: '12312312',
-      team: 'goodWars',
+      team: [12, 6, 3, 12],
       name: 'Denis',
       surname: 'Frilov',
       admin: true,
       email: '12312312@example.com',
-      rating: '10'
+      rating: 10
     }
   },
   {
@@ -93,12 +93,12 @@ const teams: ITeam[] = [
     preview: 'default',
     captain: {
       id: '12312312',
-      team: 'goodWars',
+      team: [12, 6, 3, 12],
       name: 'Denis',
       surname: 'Frilov',
       admin: true,
       email: '12312312@example.com',
-      rating: '10'
+      rating: 10
     }
   },
   {
@@ -111,19 +111,18 @@ const teams: ITeam[] = [
     preview: 'default',
     captain: {
       id: '12312312',
-      team: 'goodWars',
+      team: [12, 6, 3, 12],
       name: 'Denis',
       surname: 'Frilov',
       admin: true,
       email: '12312312@example.com',
-      rating: '10'
+      rating: 10
     }
   },
 ];
 
 const Team = () => {
 
-  const { colors } = useTheme();
   const input = useInput('');
   const modalInput = useInput('');
   const [open, setOpen] = useState(false);
@@ -145,7 +144,8 @@ const Team = () => {
         <Grid item xs={8}><Container sx={{width: '100%'}}>
           {
             teams.map((team, idx) => (
-              <TeamCard 
+              <TeamCard
+                key={team.name + idx}
                 data={team}
                 onClick={showModal}
               />

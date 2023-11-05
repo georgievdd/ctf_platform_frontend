@@ -1,6 +1,7 @@
 import { createContext, useState, useMemo } from 'react'
 import { createTheme } from '@mui/material'
 import { useTheme as useMUITheme } from '@mui/material'
+import { THEME } from './consts'
 
 export const tokens = (mode: string) => ({
     ...(mode === 'dark'
@@ -101,6 +102,105 @@ export const tokens = (mode: string) => ({
           }),
 })
 
+// export const tokens = (mode: string) => ({
+//     ...(mode === 'dark'
+//         ? {
+//             primary: {
+//                 DEFAULT: '#6B7280',
+//                 50: '#000000',
+//                 100: '#050506',
+//                 200: '#1E2024',
+//                 300: '#383C43',
+//                 400: '#515761',
+//                 500: '#6B7280',
+//                 600: '#7F8694',
+//                 700: '#969BA7',
+//                 800: '#ACB0BA',
+//                 900: '#C2C5CC',
+//                 950: '#CDD0D5'
+//             },
+//               secondary: {
+//                 DEFAULT: '#8B5CF6',
+//                 50: '#8B5CF6',
+//                 100: '#A783F8',
+//                 200: '#C2A9FA',
+//                 300: '#DED0FC',
+//                 400: '#EBE3FD',
+//               },
+//               black: {
+//                   DEFAULT: '#000000',
+//                   100: '#000000',
+//                   200: '#000000',
+//                   300: '#000000',
+//                   400: '#000000',
+//                   500: '#0F0E0E',
+//                   600: '#292929',
+//                   700: '#3D3D3D',
+//                   800: '#525252',
+//                   900: '#5C5C5C',
+//               },
+//               white: {
+//                   DEFAULT: '#FFFFFF',
+//                   100: '#F7F7F7',
+//               },
+//               gray: {
+//                   DEFAULT: '#3C3C3C',
+//               },
+//               accentMain: '#0F0E0E',
+//               borderColor: '#3C3C3C',
+//               blue: '#1900D5',
+//               highligh: '#DD1313',
+//           }
+//         : {
+//               white: {
+//                   DEFAULT: '#FFFFFF',
+//                   100: '#F7F7F7',
+//                   200: '#D1D1D1',
+//               },
+//             primary: {
+//                 DEFAULT: '#6B7280',
+//                 50: '#CDD0D5',
+//                 100: '#C2C5CC',
+//                 200: '#ACB0BA',
+//                 300: '#969BA7',
+//                 400: '#7F8694',
+//                 500: '#6B7280',
+//                 600: '#515761',
+//                 700: '#383C43',
+//                 800: '#1E2024',
+//                 900: '#050506',
+//                 950: '#000000'
+//             },
+//             secondary: {
+//                 DEFAULT: '#8B5CF6',
+//                 50: '#EBE3FD',
+//                 100: '#DED0FC',
+//                 200: '#C2A9FA',
+//                 300: '#A783F8',
+//                 400: '#8B5CF6',
+//             },
+//               black: {
+//                   DEFAULT: '#000000',
+//                   100: '#525252',
+//                   200: '#3D3D3D',
+//                   300: '#292929',
+//                   400: '#141414',
+//                   500: '#000000',
+//                   600: '#000000',
+//                   700: '#000000',
+//                   800: '#000000',
+//                   900: '#000000',
+//               },
+//               gray: {
+//                   DEFAULT: '#3C3C3C',
+//               },
+//               accentMain: '#F7F7F7',
+//               borderColor: '#D1D1D1',
+//               blue: '#1900D5',
+//               highligh: '#DD1313',
+//           }),
+// })
+
 export const themeSettings: any = (mode: string) => {
     const colors = tokens(mode)
     return {
@@ -187,12 +287,15 @@ export const ColorModeContext = createContext<{ toggleColorMode: () => void }>({
 });
 
 export const useMode = () => {
-    const [mode, setMode] = useState('light');
+    const [mode, setMode] = useState(localStorage.getItem("theme"));
 
     const colorMode = useMemo(
         () => ({
             toggleColorMode: () =>
-                setMode((prev) => (prev === 'light' ? 'dark' : 'light')),
+                setMode((prev) => {
+                    localStorage.setItem("theme", prev === THEME.LIGHT ? THEME.DARK : THEME.LIGHT);
+                    return(prev === THEME.LIGHT ? THEME.DARK : THEME.LIGHT);
+                }),
         }),
         [],
     );

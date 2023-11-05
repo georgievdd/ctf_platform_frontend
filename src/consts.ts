@@ -11,17 +11,28 @@ export const USER_STATE: IUserState = {
   ADMIN: 'admin',
 };
 
-export const MODE_STATE = {
+export const THEME = {
   LIGHT: 'light',
   DARK: 'dark',
 }
 
+const PUBLIC = '/public';
+const ADMIN = '/admin';
 export const PATH = {
   LOGIN: '/login',
   REGISTRATION: '/registration',
-  HOME: '/',
-  TEAM: '/team',
-  USER: '/user',
-  CHALLENGE: '/challenge',
-  EVENT: '/event',
+  PUBLIC: {
+    HOME: PUBLIC,
+    TEAM: PUBLIC + '/team',
+    USER: PUBLIC + '/user',
+    CHALLENGE: PUBLIC + '/challenge',
+    EVENT: PUBLIC + '/event',
+  },
+  ADMIN: {
+    HOME: ADMIN,
+    TEAM: ADMIN + '/team',
+    USER: ADMIN + '/user',
+    CHALLENGE: ADMIN + '/challenge',
+    EVENT: ADMIN + '/event',
+  }
 }

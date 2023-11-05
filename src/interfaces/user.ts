@@ -1,11 +1,15 @@
-export interface IUser {
-  id: string;
+export interface IUserBody {
   name: string;
   surname: string;
   email: string;
   admin: boolean;
-  team: null | string;
-  rating: string;
+  team: null | number[];
+  rating: number;
+}
+
+
+export interface IUser extends IUserBody {
+  id: string;
 }
 
 export interface IUsersResponse {

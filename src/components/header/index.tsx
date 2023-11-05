@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import TokenIcon from '@mui/icons-material/Token';
 import { Container, Grid } from '@mui/material';
 import { IUser } from '../../interfaces/user';
@@ -17,8 +18,10 @@ import {tokens, useTheme} from "../../theme";
 import NavLinks from '../navigation';
 import { PATH } from '../../consts';
 import {addTokenToBuffer} from "../../datafunc";
+import { useNavigate } from 'react-router-dom';
 
 export function Header({user}: {user: IUser}) {
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const { colors } = useTheme();
@@ -58,7 +61,14 @@ export function Header({user}: {user: IUser}) {
                     </Tooltip>
                 </Grid>
             </Grid>
-            <Menu anchorEl={anchorEl} handleClose={handleClose} open={open} colors={colors}/>
+            <Menu 
+                user={user}
+                anchorEl={anchorEl} 
+                handleClose={handleClose} 
+                open={open} 
+                colors={colors}
+                adminNavigate={() => navigate(PATH.ADMIN.HOME)}
+            />
         </div>
     );
 }
@@ -70,11 +80,15 @@ function Menu({
                   handleClose,
                   open,
                   colors,
+                  user,
+                  adminNavigate,
               }: {
     anchorEl: any,
     handleClose: any,
     open: any,
-    colors: any
+    colors: any,
+    user: IUser,
+    adminNavigate: any,
 }) {
     return (
         <MaterialMenu
@@ -96,6 +110,13 @@ function Menu({
                 </ListItemIcon>
                 Настройки
             </MenuItem>
+            {user.admin && 
+            <MenuItem onClick={adminNavigate}>
+                <ListItemIcon>
+                    <AdminPanelSettingsIcon fontSize="small" />
+                </ListItemIcon>
+                Админ панель
+            </MenuItem>}
             <MenuItem onClick={addTokenToBuffer}>
                 <ListItemIcon>
                     <TokenIcon fontSize="small" />
@@ -119,19 +140,19 @@ export interface ILink {
 
 const links: ILink[] = [
     {
-        to: PATH.USER,
+        to: PATH.PUBLIC.USER,
         name: 'участники'
     },
     {
-        to: PATH.EVENT,
+        to: PATH.PUBLIC.EVENT,
         name: 'события'
     },
     {
-        to: PATH.CHALLENGE,
+        to: PATH.PUBLIC.CHALLENGE,
         name: 'соревнования'
     },
     {
-        to: PATH.TEAM,
+        to: PATH.PUBLIC.TEAM,
         name: 'команды'
     }
 ];

@@ -3,7 +3,7 @@ import { IUser, IUserCreateRequest, IUserEditRequest } from "../../interfaces/us
 
 class User {
 
-  static async getAll(page: number | undefined, size: number | undefined): Promise<IUser[]> {
+  static async getAll(page?: number | undefined, size?: number | undefined): Promise<IUser[]> {
     try {
       const users = await api.user.getAll();
       return users.data.content;
