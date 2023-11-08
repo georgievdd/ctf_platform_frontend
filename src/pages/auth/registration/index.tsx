@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -13,16 +13,24 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { PATH } from '../../../consts';
+import User from '../../../services/user';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Registartion() {
+
+  const navigate = useNavigate();
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const rawData = new FormData(event.currentTarget);
-    // User.registration(rawData.get('email') as string, rawData.get('password') as string);
+    User.registration({
+      email: rawData.get('email') as string, 
+      password: rawData.get('password') as string,
+      name: rawData.get('name') as string,
+      surname: rawData.get('surname') as string,
+    }, () => navigate(PATH.PUBLIC.HOME));
   };
 
   return (
@@ -48,10 +56,10 @@ export default function Registartion() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
+                  id="name"
                   label="First Name"
                   autoFocus
                 />
@@ -60,9 +68,9 @@ export default function Registartion() {
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
+                  id="surname"
                   label="Last Name"
-                  name="lastName"
+                  name="surname"
                   autoComplete="family-name"
                 />
               </Grid>

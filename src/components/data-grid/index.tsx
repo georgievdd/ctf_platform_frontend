@@ -93,7 +93,7 @@ export default function DataGrid<IRow>({
           />
         </Box>
       </Box>
-      <AddModal open={showAdd} setOpen={setShowAdd} addObject={addObject} onClick={addOnclick}/>
+      <AddModal open={showAdd} setOpen={setShowAdd} addObject={addObject} onSubmit={addOnclick}/>
     </>
   );
 }

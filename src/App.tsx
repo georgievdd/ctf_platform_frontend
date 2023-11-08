@@ -7,7 +7,7 @@ import { THEME } from "./consts";
 const App = () => {
 
   const [theme, colorMode] = useMode();
-  if (localStorage.getItem("theme") == null) {
+  if (localStorage.getItem("theme") === null) {
     localStorage.setItem("theme", THEME.LIGHT);
   }
 

@@ -1,5 +1,8 @@
 import api from "../../api";
-import { IUser, IUserCreateRequest, IUserEditRequest } from "../../interfaces/user";
+import { showAlert } from "../../datafunc";
+import { IUser, IUserCreateRequest, IUserEditRequest, IUserLoginRequest, IUserLoginResponse, IUserRegistrationRequest, IUserRegistrationResponse } from "../../interfaces/user";
+import { store } from "../../store";
+import { setUser } from "../../store/slices/auth";
 
 class User {
 
@@ -48,21 +51,45 @@ class User {
     }
   }
 
-  static async login(email: string, password: string): Promise<void> {
-    api.user.login({email, password})
+  static async login(data: IUserLoginRequest, redirect: () => void) {
+    await api.user.login(data)
     .then(data => data.data)
     .then(data => {
       localStorage.setItem('accessJwt', data.accessJwt);
+      return data;
+    })
+    .then(() => redirect())
+    .catch(e => {
+      showAlert(e?.response?.data?.message);
     })
   }
 
-  static async registration(email: string, password: string): Promise<IUser> {
-    return await api.user.registration({email, password})
+  static async registration(data: IUserRegistrationRequest, redirect: () => void) {
+    await api.user.registration(data)
     .then(data => data.data)
     .then(data => {
       localStorage.setItem('accessJwt', data.accessJwt);
-      console.log(data);
       return data;
+    })
+    .then(() => redirect())
+    .catch(e => {
+      showAlert(e?.response?.data?.message);
+    })
+  }
+
+  static async checkAuth(redirect: () => void) {
+    redirect();
+  }
+
+  static async getProfile() {
+    api.user.getProfile()
+    .then(data => data.data)
+    .then(data => {
+      console.log(data);
+      store.dispatch(setUser(data));
+    })
+    .catch(e => {
+      showAlert(e?.response?.data?.message);
     })
   }
 

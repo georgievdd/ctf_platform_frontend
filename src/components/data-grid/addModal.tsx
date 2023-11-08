@@ -9,12 +9,12 @@ import { IUseObject } from './useAddData';
 export default function AddModal<T>({
   open,
   setOpen,
-  onClick,
+  onSubmit,
   addObject
 }: {
   open: any,
   setOpen: any,
-  onClick: () => void,
+  onSubmit: () => void,
   addObject: IUseObject
 }) {
   const handleClose = () => setOpen(false);
@@ -32,7 +32,7 @@ export default function AddModal<T>({
           <ModalContent sx={style}>
             <Box component='form' width='100%' onSubmit={e => {
               e.preventDefault();
-              onClick();
+              onSubmit();
               handleClose();
             }}>
               <Grid display='flex' container gap={3}>

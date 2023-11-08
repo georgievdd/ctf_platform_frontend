@@ -39,11 +39,15 @@ export interface IUserLoginRequest {
 export interface IUserRegistrationRequest {
   email: string;
   password: string;
+  name: string;
+  surname: string;
 }
 
 export interface IUserLoginResponse {
   accessJwt: string;
+  id: string;
 }
-export interface IUserRegistrationResponse extends IUser {
+export interface IUserRegistrationResponse {
   accessJwt: string;
+  id: string;
 }

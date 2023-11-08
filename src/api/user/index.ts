@@ -25,6 +25,12 @@ export const login = (data: IUserLoginRequest) =>
 export const registration = (data: IUserRegistrationRequest) => 
   instance.post<IUserRegistrationResponse>(endpoints.USER.REGISTRATION, data);
 
+export const checkAuth = () =>
+instance.post<IUserLoginResponse>(endpoints.USER.LOGIN);
+
+export const getProfile = () => 
+  instance.get<IUser>(endpoints.USER.PROFILE);
+
 
 export const userRaw: IUser = {
   id: '12312312',

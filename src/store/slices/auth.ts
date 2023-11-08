@@ -6,7 +6,7 @@ import type { IStore } from '..';
 import { userRaw } from '../../api/user';
 
 export interface IUserStore {
-  user: IUser | null,
+  user: IUser | null;
 };
 const initialState: IUserStore = {
   user: userRaw,
@@ -15,12 +15,12 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAuth(state: IUserStore, action: PayloadAction<IUser | null>) {
+    setUser(state: IUserStore, action: PayloadAction<IUser>) {
       state.user = action.payload;
     }
   },
 });
-export const { setAuth } = authSlice.actions;
+export const { setUser } = authSlice.actions;
 export default authSlice.reducer;
 
 export function useAuth() {

@@ -20,14 +20,13 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { IUser } from '../../interfaces/user';
 import { useAuth } from '../../store/slices/auth';
-import { Outlet, useLocation, useNavigate, useNavigation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useNavigate, useNavigation } from 'react-router-dom';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { Container, SvgIconTypeMap } from '@mui/material';
 import GroupIcon from '@mui/icons-material/Group';
 import PersonIcon from '@mui/icons-material/Person';
 import EventIcon from '@mui/icons-material/Event';
 import ChellengeIcon from '@mui/icons-material/EmojiEvents';
-import ThemeSwitcherComponent from '../../components/theme-switcher';
 import { DarkMode, LightMode, Logout } from '@mui/icons-material';
 import { PATH, THEME } from '../../consts';
 import { ColorModeContext } from '../../theme';
@@ -47,7 +46,9 @@ const AdminWrapper = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  if (!user?.admin) {
+    return <Navigate to={PATH.LOGIN}/>
+  }
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

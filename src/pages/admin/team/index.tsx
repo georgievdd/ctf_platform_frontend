@@ -1,19 +1,16 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactEventHandler, ReactNode, useState } from 'react'
 import { GridCellParams, GridColDef, GridRenderCellParams, GridTreeNodeWithRender } from '@mui/x-data-grid/models';
 import { ITeam, ITeamBody } from '../../../interfaces/team';
 import { useDataGrid } from '../../../components/data-grid/useDataGrid';
 import { IFieldInit, useAddData } from '../../../components/data-grid/useAddData';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import DataGrid from '../../../components/data-grid';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import { Button, Grid } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Button, Grid, IconButton, Stack } from '@mui/material';
 import { IUser } from '../../../interfaces/user';
 import { Link } from 'react-router-dom';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AddModal from '../../../components/data-grid/addModal';
 
 const AdminTeamPage = () => {
 
@@ -185,23 +182,7 @@ const columns: GridColDef[] = [
     // editable: true,
     //description: 'This column has a value getter and is not sortable.',
     // sortable: false,
-    renderCell: (params: GridCellParams) => {
-      const {members}: ITeam = params.row;
-      return (
-        <div>
-          {
-            members.map((e) => (
-              <Grid container gap={1} borderBottom='1px solid gray'>
-                <div style={{marginTop: '5px'}} key={e.name}><Link style={ls} to='#'>{e.id}</Link> {e.name} {e.surname} </div>
-                <DeleteOutlineIcon style={{
-                  cursor: 'pointer'
-                }} color='error' sx={{width: '20px'}}/>
-              </Grid>
-            ))
-          }
-        </div>
-      );
-    },
+    renderCell: RenderMembersCell,
     width: 300
     // flex: 1,
   },
@@ -245,28 +226,50 @@ const addFields: IFieldInit[] = [
   },
 ];
 
-function ExpandableCell({ data } : { data: IUser }) {
-  const [expanded, setExpanded] = useState(false);
-
-  const toggleExpansion = () => {
-    setExpanded(!expanded);
-  };
-
+function RenderMembersCell(params: GridCellParams) {
+  const {members}: ITeam = params.row;
+  const [showAdd, setShowAdd] = useState(false);
+  const addObject = useAddData([{
+    name: 'ID',
+    type: 'text',
+    field: 'id',
+    defaultValue: '',
+    required: true,
+  }]);
   return (
-    <div>
-      <Button variant='contained' onClick={toggleExpansion}>
-        {expanded ? 'Collapse' : 'Expand'}
-      </Button>
-      {expanded && (
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Members List
-          </AccordionSummary>
-          <AccordionDetails>
-            {data.name}
-          </AccordionDetails>
-        </Accordion>
-      )}
-    </div>
+    <Stack sx={{mb: 2}}>
+      <>
+        <AddModal open={showAdd} setOpen={setShowAdd} onSubmit={() => {}} addObject={addObject}/>
+      </>
+      <div>
+        <IconButton sx={{width: '20px', margin: 0, padding: 0}} onClick={e => memberAddOnClick(e, setShowAdd)}>
+          <PersonAddIcon style={{
+            cursor: 'pointer'
+          }} color='secondary' sx={{width: '20px'}}/>
+        </IconButton>
+      </div>
+      <div>
+        {
+          members.map((e) => (
+            <Grid key={e.id} container gap={1} borderBottom='1px solid gray'>
+              <div style={{marginTop: '5px'}} key={e.name}><Link style={ls} to='#'>{e.id}</Link> {e.name} {e.surname} </div>
+              <IconButton sx={{width: '20px', margin: 0, padding: 0}} onClick={(_e) => memberDeleteOnClick(_e, e)}>
+                <DeleteOutlineIcon style={{
+                  cursor: 'pointer'
+                }} color='error' sx={{width: '20px'}}/>
+              </IconButton>
+            </Grid>
+          ))
+        }
+      </div>
+    </Stack>
   );
+}
+
+const memberDeleteOnClick = (e: React.FormEvent<HTMLButtonElement>, data: IUser) => {
+  e.stopPropagation();
+}
+const memberAddOnClick = (e: React.FormEvent<HTMLButtonElement>, setShowAdd: (v: boolean) => void) => {
+  e.stopPropagation();
+  setShowAdd(true);
 }

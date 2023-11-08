@@ -40,11 +40,20 @@ export function Header({user}: {user: IUser}) {
                     <ThemeSwitcherComponent />
                     <Grid sx={{marginLeft: '0'}}>
                         <Typography variant='h4' style={{ minWidth: 100, marginBottom: 0, padding: 0 }}>{user.name} {user.surname}</Typography>
-                        {user.admin && <Typography variant='h6' style={{
+                        {user.admin
+                        ?<Typography variant='h6' style={{
                             minWidth: 100,
                             marginTop: 0,
-                            color: colors.highligh
-                        }}>админитратор</Typography>}
+                            color: colors.highligh,
+                            textAlign: 'end'
+                        }}>админитратор</Typography>
+                        :
+                        <Typography variant='h6' style={{
+                            minWidth: 100,
+                            marginTop: 0,
+                            color: colors.black[100],
+                            textAlign: 'end'
+                        }}>Пользователь</Typography>}
                     </Grid>
                     <Tooltip title={user.name} style={{marginLeft: "10px"}}>
                         <IconButton
