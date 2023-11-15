@@ -1,13 +1,16 @@
-import { Box, Card, Container, Grid, Paper, Typography, Button, Stack } from "@mui/material";
+import { Box, Card, Container, Grid, Paper, Typography, Button, Stack, useMediaQuery } from "@mui/material";
 import { ITeam } from "../../interfaces/team";
 import { useTheme } from "../../theme";
 import Space from "../space";
-
+import './style.css'
+import { useEffect } from "react";
 
 const TeamCard = ({data, onClick} : {
   data: ITeam,
   onClick: any,
 }) => {
+
+  const matches = useMediaQuery('(min-width:1180px)');
 
   const { colors } = useTheme();
   const text = {
@@ -30,23 +33,18 @@ const TeamCard = ({data, onClick} : {
         backgroundColor: colors.primary[200]
       }} elevation={6}>
         <Grid container>
-          <Grid item xs={3}><img
+          <Grid item xs={matches ? 3 : 12}><img
             src='https://ctftime.org/media/events/hackit_ctf_ctftime.png'
-            style={{
-              height: 'auto',
-              width: 'auto', 
-              maxHeight: '150px',
-              borderRadius: '10px',
-            }}
+            className='teame-img'
           /></Grid>
-          <Grid item xs={6}><Box>
-            <Typography style={text}><i style={descript}>Команда:</i> {data.name}</Typography>
-            <Typography style={text}><i style={descript}>Из:</i> {data.info}</Typography>
-            <Typography style={text}><i style={descript}>Рейтинг:</i> <span style={highlight}>{data.rating}</span></Typography>
-            <Typography style={text}><i style={descript}>Количество человек в команде:</i> {data.members.length}</Typography>
-            <Typography style={text}><i style={descript}>Контакты:</i> {data.contacts}</Typography>
+          <Grid item xs={matches ? 6 : 12}><Box>
+            <Typography style={text}><span style={descript}>Команда:</span> {data.title}</Typography>
+            <Typography style={text}><span style={descript}>Из:</span> {data.info}</Typography>
+            <Typography style={text}><span style={descript}>Рейтинг:</span> <span style={highlight}>{data.rating}</span></Typography>
+            <Typography style={text}><span style={descript}>Количество человек в команде:</span> {data.members.length}</Typography>
+            <Typography style={text}><span style={descript}>Контакты:</span> {data.contacts}</Typography>
           </Box></Grid>
-          <Grid item xs={3}>
+          <Grid item xs={matches ? 3 : 12}>
             <Stack height='100%'>
               <Space h={'100%'}/>
               <Space h={'100%'}/>

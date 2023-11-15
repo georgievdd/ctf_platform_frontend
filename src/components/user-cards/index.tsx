@@ -6,6 +6,8 @@ import { useTheme } from '../../theme';
 
 const UserCards = ({users, pagination} : {users: IUser[], pagination: ReactNode}) => {
 
+  console.log(users)
+
   const { colors } = useTheme();
 
   const fs: React.CSSProperties = {

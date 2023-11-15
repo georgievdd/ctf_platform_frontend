@@ -3,7 +3,7 @@ export interface IUserBody {
   surname: string;
   email: string;
   admin: boolean;
-  team: null | number[];
+  teams: null | string[];
   rating: number;
 }
 
@@ -13,12 +13,13 @@ export interface IUser extends IUserBody {
 }
 
 export interface IUsersResponse {
-  data: {
-    content: IUser[];
-    totalPages: number;
-    page: number;
-    size: number;
-  }
+  // data: {
+  //   content: IUser[];
+  //   totalPages: number;
+  //   page: number;
+  //   size: number;
+  // }
+  data: IUser[]
 }
 
 export interface IUserEditRequest {

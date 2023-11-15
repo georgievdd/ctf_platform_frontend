@@ -36,7 +36,7 @@ export default function TeamCardModal({
         <Fade in={open}>
           <ModalContent sx={style}>
             <h3 id="spring-modal-title" className="modal-title">
-              {team?.name}
+              {team?.title}
             </h3>
             <Box component='form' width='100%' onSubmit={e => {
               e.preventDefault();

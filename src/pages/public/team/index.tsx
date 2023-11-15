@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import {useTheme} from "../../../theme";
 import SearchAppBar from "../../../components/search-input";
@@ -9,119 +9,70 @@ import { ITeam } from '../../../interfaces/team';
 import TeamCard from '../../../components/team-card';
 import { Container, Grid, Pagination } from '@mui/material';
 import TeamCardModal from '../../../components/team-card/modal';
+import Team from '../../../services/team';
 
 const teams: ITeam[] = [
   {
     id: '1',
-    name: "Чупапиксы",
-    members: [],
-    rating: '4.4',
+    title: "Чупапиксы",
+    members: ['12', '432'],
+    rating: 4.4,
     info: 'НИЯУ МИФИ ИИКС ЭП',
     contacts: '8 800 555 35 35',
     preview: 'default',
-    captain: {
-      id: '12312312',
-      team: [12, 6, 3, 12],
-      name: 'Denis',
-      surname: 'Frilov',
-      admin: true,
-      email: '12312312@example.com',
-      rating: 10
-    }
+    captainId: '12312312',
   },
   {
     id: '1',
-    name: "Чупапиксы",
-    members: [],
-    rating: '4.4',
+    title: "Чупапиксы",
+    members: ['12', '432'],
+    rating: 4.4,
     info: 'НИЯУ МИФИ ИИКС ЭП',
     contacts: '8 800 555 35 35',
     preview: 'default',
-    captain: {
-      id: '12312312',
-      team: [12, 6, 3, 12],
-      name: 'Denis',
-      surname: 'Frilov',
-      admin: true,
-      email: '12312312@example.com',
-      rating: 10
-    }
+    captainId: '12312312',
   },
   {
     id: '1',
-    name: "Чупапиксы",
-    members: [],
-    rating: '4.4',
+    title: "Чупапиксы",
+    members: ['12', '432'],
+    rating: 4.4,
     info: 'НИЯУ МИФИ ИИКС ЭП',
     contacts: '8 800 555 35 35',
     preview: 'default',
-    captain: {
-      id: '12312312',
-      team: [12, 6, 3, 12],
-      name: 'Denis',
-      surname: 'Frilov',
-      admin: true,
-      email: '12312312@example.com',
-      rating: 10
-    }
+    captainId: '12312312',
   },
   {
     id: '1',
-    name: "Чупапиксы",
-    members: [],
-    rating: '4.4',
+    title: "Чупапиксы",
+    members: ['12', '432'],
+    rating: 4.4,
     info: 'НИЯУ МИФИ ИИКС ЭП',
     contacts: '8 800 555 35 35',
     preview: 'default',
-    captain: {
-      id: '12312312',
-      team: [12, 6, 3, 12],
-      name: 'Denis',
-      surname: 'Frilov',
-      admin: true,
-      email: '12312312@example.com',
-      rating: 10
-    }
+    captainId: '12312312',
   },
   {
     id: '1',
-    name: "Чупапиксы",
-    members: [],
-    rating: '4.4',
+    title: "Чупапиксы",
+    members: ['12', '432'],
+    rating: 4.4,
     info: 'НИЯУ МИФИ ИИКС ЭП',
     contacts: '8 800 555 35 35',
     preview: 'default',
-    captain: {
-      id: '12312312',
-      team: [12, 6, 3, 12],
-      name: 'Denis',
-      surname: 'Frilov',
-      admin: true,
-      email: '12312312@example.com',
-      rating: 10
-    }
-  },
-  {
-    id: '1',
-    name: "Чупапиксы",
-    members: [],
-    rating: '4.4',
-    info: 'НИЯУ МИФИ ИИКС ЭП',
-    contacts: '8 800 555 35 35',
-    preview: 'default',
-    captain: {
-      id: '12312312',
-      team: [12, 6, 3, 12],
-      name: 'Denis',
-      surname: 'Frilov',
-      admin: true,
-      email: '12312312@example.com',
-      rating: 10
-    }
+    captainId: '12312312',
   },
 ];
 
-const Team = () => {
+const TeamPage = () => {
+
+  // const [teams, setTeams] = useState<ITeam[]>([]);
+
+  // useEffect(() => {
+  //   (async() => {
+  //     setTeams(await Team.getAll());
+  //   })()
+  // }, []);
 
   const input = useInput('');
   const modalInput = useInput('');
@@ -132,10 +83,13 @@ const Team = () => {
     setOpen(true);
   }
   const modalOnclick = () => {
+
+    Team.sendInviteCode({code: modalInput.value})
+
     console.log(modalInput.value);
+    modalInput.onChange({target: {value: ''}});
     setModalTeam(null);
     setOpen(false);
-    modalInput.onChange({target: {value: ''}});
   }
   return (
     <div>
@@ -145,7 +99,7 @@ const Team = () => {
           {
             teams.map((team, idx) => (
               <TeamCard
-                key={team.name + idx}
+                key={team.title + idx}
                 data={team}
                 onClick={showModal}
               />
@@ -163,4 +117,4 @@ const Team = () => {
   )
 }
 
-export default Team
+export default TeamPage

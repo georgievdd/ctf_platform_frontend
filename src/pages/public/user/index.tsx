@@ -18,6 +18,7 @@ const UserPage = () => {
 
   useEffect(() => {
     (async() => setData(await User.getAll()))()
+    // (async() => console.log(await User.getAll()))()
   }, []);
   
   return (

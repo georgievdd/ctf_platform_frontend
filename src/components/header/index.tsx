@@ -32,6 +32,10 @@ export function Header({user}: {user: IUser}) {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const logout = () => {
+        localStorage.removeItem('accessJwt');
+        navigate(PATH.LOGIN);
+    }
     return (
         <div style={{paddingTop: '30px'}}>
             <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
@@ -77,6 +81,7 @@ export function Header({user}: {user: IUser}) {
                 open={open} 
                 colors={colors}
                 adminNavigate={() => navigate(PATH.ADMIN.HOME)}
+                logout={logout}
             />
         </div>
     );
@@ -91,6 +96,7 @@ function Menu({
                   colors,
                   user,
                   adminNavigate,
+                  logout,
               }: {
     anchorEl: any,
     handleClose: any,
@@ -98,6 +104,7 @@ function Menu({
     colors: any,
     user: IUser,
     adminNavigate: any,
+    logout: () => void,
 }) {
     return (
         <MaterialMenu
@@ -132,7 +139,7 @@ function Menu({
                 </ListItemIcon>
                 Копировать токен
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={e => {logout(); handleClose()}}>
                 <ListItemIcon>
                     <Logout fontSize="small" />
                 </ListItemIcon>

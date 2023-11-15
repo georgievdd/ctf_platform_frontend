@@ -32,7 +32,7 @@ export const Login = () => {
   };
 
   useEffect(() => {
-    // User.checkAuth(() => navigate(PATH.PUBLIC.HOME))
+    User.checkAuth(() => navigate(PATH.PUBLIC.HOME))
   }, []);
 
   return (

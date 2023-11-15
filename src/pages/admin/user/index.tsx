@@ -9,30 +9,22 @@ import { IFieldInit, useAddData } from '../../../components/data-grid/useAddData
 
 const AdminUserPage = () => {
 
-  const [data, setData] = useState<IUser[]>([
-    {
-      id: '123',
-      team: [2, 6, 8, 2],
-      name: 'Dima',
-      surname: 'Frilov',
-      admin: false,
-      email: '12@example.com',
-      rating: 15
-    },
-  ]);
+  const [data, setData] = useState<IUser[]>([]);
+  console.log(data.map(e => ({...e, teams: JSON.stringify(e.teams)})))
 
   ///
   const [id, setId] = useState(100);
   ///
-  const dataState = useDataGrid<IUser>(data, columns);
+  const dataState = useDataGrid<IUser>(data.map(e => ({...e, teams: JSON.stringify(e.teams)})), columns);
   const addObject = useAddData(addFields);
   const add = () => {
-    setData(prev => (
-      [...prev, {
-        id: id.toString(),
-        ...addObject.dto() as IUserBody,
-      }]
-    ))
+    // setData(prev => (
+    //   [...prev, {
+    //     id: id.toString(),
+    //     ...addObject.dto() as IUserBody,
+    //   }]
+    // ))
+    console.log(addObject.dto())
     addObject.setInit();
     setId(id + 1);
   }
@@ -109,7 +101,7 @@ const columns: GridColDef[] = [
     flex: 1,
   },
   {
-    field: 'team',
+    field: 'teams',
     headerName: 'Команды',
     type: '',
     editable: true,

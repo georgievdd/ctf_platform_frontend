@@ -1,82 +1,33 @@
-import React, { ReactEventHandler, ReactNode, useState } from 'react'
+import React, { ReactEventHandler, ReactNode, useEffect, useState } from 'react'
 import { GridCellParams, GridColDef, GridRenderCellParams, GridTreeNodeWithRender } from '@mui/x-data-grid/models';
-import { ITeam, ITeamBody } from '../../../interfaces/team';
+import { ITeam, ITeamBody, ITeamCreateRequest } from '../../../interfaces/team';
 import { useDataGrid } from '../../../components/data-grid/useDataGrid';
 import { IFieldInit, useAddData } from '../../../components/data-grid/useAddData';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import DataGrid from '../../../components/data-grid';
-import { Button, Grid, IconButton, Stack } from '@mui/material';
+import { Button, Grid, IconButton, Stack, Typography } from '@mui/material';
 import { IUser } from '../../../interfaces/user';
 import { Link } from 'react-router-dom';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddModal from '../../../components/data-grid/addModal';
+import Team from '../../../services/team';
 
 const AdminTeamPage = () => {
 
-  const [data, setData] = useState<ITeam[]>([
-    {
-      id: '1',
-      name: "Чупапиксы",
-      members: [
-        {
-          id: '12312312',
-          team: [1, 3, 12],
-          name: 'Denis',
-          surname: 'Frilov',
-          admin: false,
-          email: '12312312@example.com',
-          rating: 1
-        },
-        {
-          id: '213',
-          team: [1, 6, 35, 12],
-          name: 'ferd',
-          surname: 'grevr',
-          admin: false,
-          email: 'wgrrgf@example.com',
-          rating: 14
-        },
-        {
-          id: '2wef13',
-          team: [1, 6, 12],
-          name: 'ferd',
-          surname: 'grevr',
-          admin: false,
-          email: 'wgrrgf@example.com',
-          rating: 14
-        }
-      ],
-      rating: '4.4',
-      info: 'НИЯУ МИФИ ИИКС ЭП',
-      contacts: '8 800 555 35 35',
-      preview: 'default',
-      captain: {
-        id: '12312312',
-        team: [12, 6, 3, 12],
-        name: 'Denis',
-        surname: 'Frilov',
-        admin: false,
-        email: '12312312@example.com',
-        rating: 10
-      }
-    }
-  ]);
+  const [data, setData] = useState<ITeam[]>([])
 
-  ///
-  const [id, setId] = useState(100);
-  ///
   const dataState = useDataGrid<ITeam>(data, columns);
   const addObject = useAddData(addFields);
   const add = () => {
-    setData(prev => (
-      [...prev, {
-        id: id.toString(),
-        ...addObject.dto() as ITeamBody,
-      }]
-    ))
-    addObject.setInit();
-    setId(id + 1);
+    // setData(prev => (
+    //   [...prev, {
+    //     id: id.toString(),
+    //     ...addObject.dto() as ITeamBody,
+    //   }]
+    // ))
+    // addObject.setInit();
+    Team.create(addObject.dto() as ITeamCreateRequest)
   }
   const onDelete = (ids: string[]) => {
     setData(prev => prev.filter(e => !ids.includes(e.id)));
@@ -84,6 +35,12 @@ const AdminTeamPage = () => {
   const saveChanges = () => {
     console.log(dataState.changedRowsIds);
   }
+
+  useEffect(() => {
+    (async() => {
+      setData(await Team.getAll())
+    })()
+  }, [])
 
 
   return (
@@ -118,7 +75,7 @@ const columns: GridColDef[] = [
     // sortable: false,
   },
   {
-    field: 'name',
+    field: 'title',
     headerName: 'Название команды',
     type: 'string',
     editable: true,
@@ -158,22 +115,22 @@ const columns: GridColDef[] = [
     // sortable: false,
   },
   {
-    field: 'captain',
+    field: 'captainId',
     headerName: 'Капитан',
     type: 'string',
     // editable: true,
     //description: 'This column has a value getter and is not sortable.',
     // sortable: false,
     renderCell: (params: GridCellParams) => {
-      const {captain}: ITeam = params.row;
+      const {captainId}: ITeam = params.row;
       return (
         <div>
-          <Link to='#' style={ls}>{captain.id}</Link> {captain.name} {captain.surname}
+          <Link to='#' style={ls} onClick={e => e.stopPropagation()}>{captainId}</Link>
         </div>
       );
     },
-    width: 300
-    // flex: 1,
+    // width: 300
+    flex: 1,
   },
   {
     field: 'members',
@@ -183,23 +140,23 @@ const columns: GridColDef[] = [
     //description: 'This column has a value getter and is not sortable.',
     // sortable: false,
     renderCell: RenderMembersCell,
-    width: 300
-    // flex: 1,
+    // width: 300
+    flex: 1,
   },
 ];
 const addFields: IFieldInit[] = [
   {
-    field: 'name',
+    field: 'title',
     name: 'Название',
     type: 'text',
     defaultValue: '',
   },
-  {
-    field: 'rating',
-    name: 'Рейтинг',
-    type: 'number',
-    defaultValue: 0,
-  },
+  // {
+  //   field: 'rating',
+  //   name: 'Рейтинг',
+  //   type: 'number',
+  //   defaultValue: 0,
+  // },
   {
     field: 'info',
     name: 'Дополнительная информация',
@@ -218,16 +175,16 @@ const addFields: IFieldInit[] = [
     type: 'text',
     defaultValue: 'default',
   },
-  {
-    field: 'captain',
-    name: 'Капитан',
-    type: 'text',
-    defaultValue: '',
-  },
+  // {
+  //   field: 'captain',
+  //   name: 'Капитан',
+  //   type: 'text',
+  //   defaultValue: '',
+  // },
 ];
 
 function RenderMembersCell(params: GridCellParams) {
-  const {members}: ITeam = params.row;
+  const {members, id}: ITeam = params.row;
   const [showAdd, setShowAdd] = useState(false);
   const addObject = useAddData([{
     name: 'ID',
@@ -239,7 +196,7 @@ function RenderMembersCell(params: GridCellParams) {
   return (
     <Stack sx={{mb: 2}}>
       <>
-        <AddModal open={showAdd} setOpen={setShowAdd} onSubmit={() => {}} addObject={addObject}/>
+        <AddModal open={showAdd} setOpen={setShowAdd} onSubmit={() => memberAddOnClickSubmit(addObject.dto().id as string, id)} addObject={addObject}/>
       </>
       <div>
         <IconButton sx={{width: '20px', margin: 0, padding: 0}} onClick={e => memberAddOnClick(e, setShowAdd)}>
@@ -250,10 +207,11 @@ function RenderMembersCell(params: GridCellParams) {
       </div>
       <div>
         {
-          members.map((e) => (
-            <Grid key={e.id} container gap={1} borderBottom='1px solid gray'>
-              <div style={{marginTop: '5px'}} key={e.name}><Link style={ls} to='#'>{e.id}</Link> {e.name} {e.surname} </div>
-              <IconButton sx={{width: '20px', margin: 0, padding: 0}} onClick={(_e) => memberDeleteOnClick(_e, e)}>
+          members.map((e, idx) => (
+            <Grid key={e + idx} container gap={1} borderBottom='1px solid gray'>
+              {/* <div style={{marginTop: '5px'}} key={e.name}><Link style={ls} to='#'>{e.id}</Link> {e.name} {e.surname} </div> */}
+              <Typography>{e}</Typography>
+              <IconButton sx={{width: '20px', margin: 0, padding: 0}} onClick={(_e) => memberDeleteOnClick(_e, e, id)}>
                 <DeleteOutlineIcon style={{
                   cursor: 'pointer'
                 }} color='error' sx={{width: '20px'}}/>
@@ -266,10 +224,33 @@ function RenderMembersCell(params: GridCellParams) {
   );
 }
 
-const memberDeleteOnClick = (e: React.FormEvent<HTMLButtonElement>, data: IUser) => {
+const memberDeleteOnClick = (e: React.FormEvent<HTMLButtonElement>, userId: string, teamId: string) => {
   e.stopPropagation();
+  Team.deleteUserFromTeam(userId, teamId);
 }
 const memberAddOnClick = (e: React.FormEvent<HTMLButtonElement>, setShowAdd: (v: boolean) => void) => {
   e.stopPropagation();
   setShowAdd(true);
 }
+const memberAddOnClickSubmit = (userId: string, teamId: string) => {
+  Team.addUserToTeam(userId, teamId);
+}
+
+/*
+    {
+      id: '1',
+      title: "Чупапиксы",
+      members: [
+        '12312312',
+        '12312312',
+        '12312312',
+        '12312312',
+        '12312312',
+      ],
+      rating: 4.4,
+      info: 'НИЯУ МИФИ ИИКС ЭП',
+      contacts: '8 800 555 35 35',
+      preview: 'default',
+      captainId: '12',
+    }
+*/

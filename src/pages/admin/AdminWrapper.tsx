@@ -81,7 +81,7 @@ const AdminWrapper = () => {
         <List>
         <NavItem theme={theme} current={pathname === PATH.ADMIN.USER} Icon={PersonIcon} text='пользователи' open={open} onClick={() => navigate(PATH.ADMIN.USER)}/>
         <NavItem theme={theme} current={pathname === PATH.ADMIN.TEAM} Icon={GroupIcon} text='команды' open={open} onClick={() => navigate(PATH.ADMIN.TEAM)}/>
-        <NavItem theme={theme} current={pathname === PATH.ADMIN.EVENT} Icon={EventIcon} text='собатия' open={open} onClick={() => navigate(PATH.ADMIN.EVENT)}/>
+        <NavItem theme={theme} current={pathname === PATH.ADMIN.EVENT} Icon={EventIcon} text='события' open={open} onClick={() => navigate(PATH.ADMIN.EVENT)}/>
         <NavItem theme={theme} current={pathname === PATH.ADMIN.CHALLENGE} Icon={ChellengeIcon} text='соревнования' open={open} onClick={() => navigate(PATH.ADMIN.CHALLENGE)}/>
         </List>
         <Divider />
