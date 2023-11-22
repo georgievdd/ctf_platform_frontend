@@ -47,7 +47,7 @@ const AdminWrapper = () => {
     setOpen(false);
   };
   if (!user?.admin) {
-    return <Navigate to={PATH.LOGIN}/>
+    // return <Navigate to={PATH.AUTH.LOGIN}/>
   }
   return (
     <Box sx={{ display: 'flex' }}>

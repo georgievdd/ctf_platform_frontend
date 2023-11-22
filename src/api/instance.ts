@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { showAlert } from "../datafunc";
 
 const HOST = "http://127.0.0.1";
 const PORT = 8080;
@@ -17,8 +18,15 @@ export const instance = axios.create({
   }
 });
 
-
 instance.interceptors.request.use((config) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem('accessJwt')}`;
   return config;
 })
+
+// instance.interceptors.response.use(_ => _, (error: AxiosError) => {
+//   // if (!error.response) {
+//   //   showAlert("Ошибка подключения к серверу")
+//   // }
+//   // // return error
+//   // return Promise.resolve()
+// })

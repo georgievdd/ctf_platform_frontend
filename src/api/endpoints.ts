@@ -5,9 +5,11 @@ const TEAM = {
   TEAM: team,
   ALL: team + '/all',
   CREATE: team + '/new',
-  DELETE_USER: (userId: string, teamId: string) =>  `${team}/delete/user/${userId}/team/${teamId}`,
-  ADD_USER: (userId: string, teamId: string) => `/team/add/user/${userId}/team/${teamId}`,
+  DELETE_USER: (userId?: string, teamId?: string) =>  `/admin/user/${userId}/team/${teamId}`,
+  ADD_USER: (userId?: string, teamId?: string) => `/admin/user/${userId}/team/${teamId}`,
   INVITE_CODE: team + '/add',
+  MY: team + '/my',
+  DELETE_TEAM: (id?: string) => `/admin/team/${id}`,
 }
 
 const AUTH = {
@@ -19,11 +21,19 @@ const AUTH = {
 const USER = {
   USER: user,
   ALL: user + '/all',
-  PROFILE: user + '/me'
+  PROFILE: user + '/me',
 };
+
+const ADMIN = {
+  USER: {
+    DELETE: (id?: string) => `/admin/user/${id}`,
+    UPDATE: (id?: string) => `/admin/user/update/${id}`
+  }
+}
 
 export default {
   USER,
   AUTH,
   TEAM,
+  ADMIN,
 };

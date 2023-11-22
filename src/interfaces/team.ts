@@ -8,14 +8,15 @@ export interface ITeamBody {
   contacts: string;
   captainId: string;
   preview: string;
+  code?: string;
 }
 
 export interface ITeam extends ITeamBody {
   id: string;
-};
+}
 
-export interface ITeamsResponse {
-  data: ITeam[]
+export interface ITeamsRequest {
+  limit?: number;
 }
 
 export interface ITeamCreateRequest {
@@ -25,6 +26,17 @@ export interface ITeamCreateRequest {
   preview: string
 }
 
+export interface ITeamDeleteMemberRequest {
+  userId: string
+  teamId: string
+}
+
 export interface ITeamAddMemberRequest {
+  userId: string
+  teamId: string
+}
+
+export interface ITeamSendInviteRequest {
   code: string
+  teamId: string
 }

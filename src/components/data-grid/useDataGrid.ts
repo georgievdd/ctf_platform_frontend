@@ -3,12 +3,17 @@ import { useState } from "react";
 import _ from 'lodash';
 
 export interface UseDataGridParams<IRow> {
-  rowSelectionModel: string[],
-  onRowSelectionModelChange: (params: any[]) => void,
-  rows: GridValidRowModel[],
-  columns: GridColDef[],
+  dataGrid: {
+    rowSelectionModel: string[],
+    onRowSelectionModelChange: (params: any[]) => void,
+    rows: GridValidRowModel[],
+    columns: GridColDef[],
+    processRowUpdate: (newRow: GridValidRowModel, oldRow: GridValidRowModel) => GridValidRowModel,
+  },
   changedRowsIds: string[],
-  processRowUpdate: (newRow: GridValidRowModel, oldRow: GridValidRowModel) => GridValidRowModel
+  changedRows: GridValidRowModel[],
+  setChangedRowsId: (d: string[]) => void,
+  setChangedRows: (d: GridValidRowModel[]) => void,
 }
 
 export function useDataGrid<IRow>(rows: GridValidRowModel[], columns: GridColDef[]): UseDataGridParams<IRow> {
@@ -16,22 +21,28 @@ export function useDataGrid<IRow>(rows: GridValidRowModel[], columns: GridColDef
   const onRowSelectionModelChange = (params: any[]) => {
     setRowSelectionModel(params);
   };
-  const [changedRowsIds, setChangedRows] = useState<string[]>([]);
+  const [changedRowsIds, setChangedRowsId] = useState<string[]>([])
+  const [changedRows, setChangedRows] = useState<GridValidRowModel[]>([])
 
   const processRowUpdate = (newRow: GridValidRowModel, oldRow: GridValidRowModel): GridValidRowModel => {
-    if (!_.isEqual(newRow, oldRow) && !changedRowsIds.includes(newRow.id)) {
-      setChangedRows(prev => [...prev, newRow.id]);
-    }
-
-    return newRow;
+    // if (!_.isEqual(newRow, oldRow) && !changedRowsIds.includes(newRow.id)) {
+      setChangedRowsId(prev => [...prev, newRow.id])
+      setChangedRows(prev => [...prev, newRow])
+    // }
+    return newRow
   }
 
   return {
-    rowSelectionModel,
-    onRowSelectionModelChange,
-    rows,
-    columns,
-    processRowUpdate,
+    dataGrid: {
+      rowSelectionModel,
+      onRowSelectionModelChange,
+      rows,
+      columns,
+      processRowUpdate,
+    },
     changedRowsIds,
+    changedRows,
+    setChangedRowsId,
+    setChangedRows,
   }
 }

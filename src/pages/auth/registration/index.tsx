@@ -13,7 +13,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { PATH } from '../../../consts';
-import User from '../../../services/user';
+import { useApi } from '../../../api/hook';
+import { IUserRegistrationRequest, IUserRegistrationResponse } from '../../../interfaces/user';
+import api from '../../../api';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -21,16 +23,22 @@ const defaultTheme = createTheme();
 export default function Registartion() {
 
   const navigate = useNavigate();
-  
+  const registration = useApi<IUserRegistrationRequest, IUserRegistrationResponse>(api.auth.registration);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const rawData = new FormData(event.currentTarget);
-    User.registration({
+    registration.fetchData({
       email: rawData.get('email') as string, 
       password: rawData.get('password') as string,
       name: rawData.get('name') as string,
       surname: rawData.get('surname') as string,
-    }, () => navigate(PATH.PUBLIC.HOME));
+    })
+    .then((data) => {
+      if (!data) return;
+      localStorage.setItem('accessJwt', data.accessJwt);
+      navigate(PATH.PUBLIC.HOME);
+    })
   };
 
   return (
@@ -112,7 +120,7 @@ export default function Registartion() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to={PATH.LOGIN}>
+                <Link to={PATH.AUTH.LOGIN}>
                   Already have an account? Sign in
                 </Link>
               </Grid>

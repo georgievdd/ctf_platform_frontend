@@ -1,44 +1,45 @@
 import { useEffect, useState } from 'react'
-import { IUser, IUserBody } from '../../../interfaces/user'
-import User from '../../../services/user';
+import { IUser, IUserEditRequest, IUserLoginResponse, IUserRegistrationRequest, IUsersRequest } from '../../../interfaces/user'
 import { useDataGrid } from '../../../components/data-grid/useDataGrid';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { GridColDef } from '@mui/x-data-grid';
 import DataGrid from '../../../components/data-grid';
 import { IFieldInit, useAddData } from '../../../components/data-grid/useAddData';
+import { useApi, useDataApi } from '../../../api/hook';
+import api from '../../../api';
 
 const AdminUserPage = () => {
 
-  const [data, setData] = useState<IUser[]>([]);
-  console.log(data.map(e => ({...e, teams: JSON.stringify(e.teams)})))
+  const users = useDataApi<IUsersRequest, IUser[]>([], api.user.getAll);
+  const createUser = useApi<IUserRegistrationRequest, IUserLoginResponse>(api.auth.registration);
+  const deleteUser = useApi<string, void>(api.user.deleteOne);
+  const editUser = useApi<IUserEditRequest, IUser>(api.user.edit);
+  const dataState = useDataGrid<IUser>(users.data.map(e => ({...e, teams: JSON.stringify(e.teams)})), columns);
+  
 
-  ///
-  const [id, setId] = useState(100);
-  ///
-  const dataState = useDataGrid<IUser>(data.map(e => ({...e, teams: JSON.stringify(e.teams)})), columns);
+
   const addObject = useAddData(addFields);
   const add = () => {
-    // setData(prev => (
-    //   [...prev, {
-    //     id: id.toString(),
-    //     ...addObject.dto() as IUserBody,
-    //   }]
-    // ))
-    console.log(addObject.dto())
-    addObject.setInit();
-    setId(id + 1);
+    createUser.fetchData(addObject.dto())
+    .then(() => users.fetchData());
   }
-  const onDelete = (ids: string[]) => {
-    setData(prev => prev.filter(e => !ids.includes(e.id)));
+  const onDelete = async (ids: string[]) => {
+    await Promise.all(ids.map(id => deleteUser.fetchData(id)));
+    users.fetchData();
   }
-  const saveChanges = () => {
-    console.log(dataState.changedRowsIds);
+  const saveChanges = async () => {
+    // console.log(dataState.changedRows)
+    await Promise.all(dataState.changedRows.map(user => 
+      editUser.fetchData({...user, teams: JSON.parse(user.teams)} as IUser)
+    )).finally(() => {
+      dataState.setChangedRows([]);
+      dataState.setChangedRowsId([]);
+    })
+    users.fetchData();
   }
 
   useEffect(() => {
-    (async() => {
-      setData(await User.getAll());
-    })()
+    users.fetchData();
   }, []);
 
   return (
@@ -105,6 +106,9 @@ const columns: GridColDef[] = [
     headerName: 'Команды',
     type: '',
     editable: true,
+    // valueGetter(params) {
+    //   return JSON.stringify(params.row.teams)
+    // },
     //description: 'This column has a value getter and is not sortable.',
     // sortable: false,
     flex: 1,
@@ -134,12 +138,6 @@ const addFields: IFieldInit[] = [
     required: true,
   },
   {
-    field: 'rating',
-    name: 'Рейтинг',
-    type: 'number',
-    defaultValue: 0,
-  },
-  {
     field: 'email',
     name: 'Email',
     type: 'email',
@@ -147,15 +145,10 @@ const addFields: IFieldInit[] = [
     required: true,
   },
   {
-    field: 'admin',
-    name: 'Администратор',
-    type: 'boolean',
-    defaultValue: false,
-  },
-  {
-    field: 'team',
-    name: 'Команды',
-    type: 'text',
+    field: 'password',
+    name: 'Пароль',
+    type: 'password',
     defaultValue: '',
+    required: true,
   },
 ];

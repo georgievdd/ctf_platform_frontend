@@ -12,24 +12,17 @@ export interface IUser extends IUserBody {
   id: string;
 }
 
-export interface IUsersResponse {
-  // data: {
-  //   content: IUser[];
-  //   totalPages: number;
-  //   page: number;
-  //   size: number;
-  // }
-  data: IUser[]
+export interface IUsersRequest {
+  limit?: number;
 }
+
+
 
 export interface IUserEditRequest {
   id: string;
+  surname: string;
   name: string;
-}
-
-export interface IUserCreateRequest {
-  name: string;
-  team: null | string;
+  teams: null | string[];
 }
 
 export interface IUserLoginRequest {
@@ -44,11 +37,11 @@ export interface IUserRegistrationRequest {
   surname: string;
 }
 
+export interface ICheckAuthRequest {}
+
 export interface IUserLoginResponse {
   accessJwt: string;
-  id: string;
 }
 export interface IUserRegistrationResponse {
   accessJwt: string;
-  id: string;
 }

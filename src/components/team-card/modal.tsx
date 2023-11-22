@@ -21,7 +21,6 @@ export default function TeamCardModal({
   onClick: any,
   input: any,
 }) {
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
     <div>
@@ -44,7 +43,7 @@ export default function TeamCardModal({
             }}>
               <Input 
                 placeholder='ioesjurbgisergwef'
-                // type='password'
+                type='password'
                 {...input}
                 required
                 style={{width: "100%"}}

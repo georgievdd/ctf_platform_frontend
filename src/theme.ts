@@ -46,6 +46,7 @@ export const tokens = (mode: string) => ({
               },
               gray: {
                   DEFAULT: '#3C3C3C',
+                  100: '#646C6C',
               },
               accentMain: '#0F0E0E',
               borderColor: '#3C3C3C',
@@ -93,7 +94,8 @@ export const tokens = (mode: string) => ({
                   900: '#000000',
               },
               gray: {
-                  DEFAULT: '#3C3C3C',
+                DEFAULT: '#3C3C3C',
+                100: '#646C6C',
               },
               accentMain: '#F7F7F7',
               borderColor: '#D1D1D1',
@@ -234,50 +236,63 @@ export const themeSettings: any = (mode: string) => {
         },
         typography: {
             fontFamily: [
-                '-apple-system',
-                'BlinkMacSystemFont',
-                '"Segoe UI"',
-                'Roboto',
-                '"Helvetica Neue"',
-                'Arial',
+                'Montserrat', 
                 'sans-serif',
-                '"Apple Color Emoji"',
-                '"Segoe UI Emoji"',
-                '"Segoe UI Symbol"',
               ].join(','),
             fontSize: 14,
             h1: {
-                fontFamily: ['Poppins', 'sans-serif'].join(','),
+                fontFamily: [
+                    'Montserrat', 
+                    'sans-serif',
+                  ].join(','),
                 fontSize: 40,
                 fontWeight: 600,
             },
             h2: {
-                fontFamily: ['Poppins', 'sans-serif'].join(','),
+                fontFamily: [
+                    'Montserrat', 
+                    'sans-serif',
+                  ].join(','),
                 fontSize: 35,
                 fontWeight: 600,
             },
             h3: {
-                fontFamily: ['Poppins', 'sans-serif'].join(','),
+                fontFamily: [
+                    'Montserrat', 
+                    'sans-serif',
+                  ].join(','),
                 fontSize: 30,
                 fontWeight: 500,
             },
             h4: {
-                fontFamily: ['Poppins', 'sans-serif'].join(','),
+                fontFamily: [
+                    'Montserrat', 
+                    'sans-serif',
+                  ].join(','),
                 fontSize: 25,
                 fontWeight: 500,
             },
             h5: {
-                fontFamily: ['Poppins', 'sans-serif'].join(','),
+                fontFamily: [
+                    'Montserrat', 
+                    'sans-serif',
+                  ].join(','),
                 fontSize: 25,
                 fontWeight: 600,
             },
             h6: {
-                fontFamily: ['Poppins', 'sans-serif'].join(','),
+                fontFamily: [
+                    'Montserrat', 
+                    'sans-serif',
+                  ].join(','),
                 fontSize: 15,
                 fontWeight: 600,
             },
             p: {
-                fontFamily: ['Poppins', 'sans-serif'].join(','),
+                fontFamily: [
+                    'Montserrat', 
+                    'sans-serif',
+                  ].join(','),
                 fontSize: 20,
             },
         },

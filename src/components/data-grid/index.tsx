@@ -42,14 +42,13 @@ export default function DataGrid<IRow>({
   cellList?: boolean,
 }) {
   const [showAdd, setShowAdd] = useState(false);
-  const { rows, rowSelectionModel } = state;
+  const { rows, rowSelectionModel } = state.dataGrid;
   const [paginationModel, setPaginationModel] = React.useState({
     pageSize: PAGE_SIZE,
     page: 0,
   });
   const { theme } = useTheme();
   const containerStyle: React.CSSProperties = { 
-    // minHeight: '90vh',
     width: 'auto', 
     border: `2px solid ${theme.palette.mode === 'light' ? '#d9d9d9' : 'rgb(67, 67, 67)'}`,
     borderRadius: '10px',
@@ -89,7 +88,11 @@ export default function DataGrid<IRow>({
               cellList ? 150 : undefined
             )}
             getRowClassName={params => rowSelectionModel.includes(params.id as string) ? classes.selectedRow : ''}
-            {...state}
+            rows={state.dataGrid.rows}
+            columns={state.dataGrid.columns}
+            onRowSelectionModelChange={state.dataGrid.onRowSelectionModelChange}
+            rowSelectionModel={state.dataGrid.rowSelectionModel}
+            processRowUpdate={state.dataGrid.processRowUpdate}
           />
         </Box>
       </Box>

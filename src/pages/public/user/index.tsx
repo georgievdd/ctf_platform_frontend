@@ -1,31 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Container,
   Grid,
   Pagination
 } from '@mui/material';
-import { IUser } from '../../../interfaces/user';
-import Space from '../../../components/space';
+import { IUser, IUsersRequest } from '../../../interfaces/user';
 import SearchInput from '../../../components/search-input';
 import { useInput } from '../../../hooks';
 import UserCards from '../../../components/user-cards';
-import User from '../../../services/user';
+import { IMethod, useDataApi } from '../../../api/hook';
+import api from '../../../api';
 
 const UserPage = () => {
 
-  const [data, setData] = useState<IUser[]>([]);
+  const users = useDataApi<IUsersRequest, IUser[]>([], api.user.getAll);
   const input = useInput('');
 
   useEffect(() => {
-    (async() => setData(await User.getAll()))()
-    // (async() => console.log(await User.getAll()))()
+    users.fetchData();
   }, []);
   
   return (
     <div>
       <Grid container>
         <Grid item xs={8}>
-          <UserCards users={data} pagination={(
+          <UserCards users={users.data} pagination={(
             <Grid display='flex' justifyContent='center'>
               <Pagination count={10} color="secondary" size='large'/>
             </Grid>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import MaterialMenu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -10,7 +10,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import TokenIcon from '@mui/icons-material/Token';
-import { Container, Grid } from '@mui/material';
+import { Box, Container, Drawer, Grid, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { IUser } from '../../interfaces/user';
 import ThemeSwitcherComponent from "../theme-switcher";
 import Typography from "@mui/material/Typography";
@@ -22,7 +22,7 @@ import { useNavigate } from 'react-router-dom';
 
 export function Header({user}: {user: IUser}) {
     const navigate = useNavigate();
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const { colors } = useTheme();
     
@@ -34,30 +34,25 @@ export function Header({user}: {user: IUser}) {
     };
     const logout = () => {
         localStorage.removeItem('accessJwt');
-        navigate(PATH.LOGIN);
+        navigate(PATH.AUTH.LOGIN);
     }
     return (
         <div style={{paddingTop: '30px'}}>
             <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
                 <NavLinks links={links}/>
                 <Grid display='flex' justifyContent='end'>
-                    <ThemeSwitcherComponent />
+                    <Box sx={{display: {xs: 'none', md: 'block', lg: 'block'}}}>
+                        <ThemeSwitcherComponent />
+                    </Box>
                     <Grid sx={{marginLeft: '0'}}>
                         <Typography variant='h4' style={{ minWidth: 100, marginBottom: 0, padding: 0 }}>{user.name} {user.surname}</Typography>
                         {user.admin
-                        ?<Typography variant='h6' style={{
+                        &&<Typography variant='h6' style={{
                             minWidth: 100,
                             marginTop: 0,
                             color: colors.highligh,
                             textAlign: 'end'
-                        }}>админитратор</Typography>
-                        :
-                        <Typography variant='h6' style={{
-                            minWidth: 100,
-                            marginTop: 0,
-                            color: colors.black[100],
-                            textAlign: 'end'
-                        }}>Пользователь</Typography>}
+                        }}>админитратор</Typography>}
                     </Grid>
                     <Tooltip title={user.name} style={{marginLeft: "10px"}}>
                         <IconButton
@@ -82,6 +77,7 @@ export function Header({user}: {user: IUser}) {
                 colors={colors}
                 adminNavigate={() => navigate(PATH.ADMIN.HOME)}
                 logout={logout}
+                toProfilePage={() => navigate(PATH.PUBLIC.ME)}
             />
         </div>
     );
@@ -97,6 +93,7 @@ function Menu({
                   user,
                   adminNavigate,
                   logout,
+                  toProfilePage,
               }: {
     anchorEl: any,
     handleClose: any,
@@ -105,6 +102,7 @@ function Menu({
     user: IUser,
     adminNavigate: any,
     logout: () => void,
+    toProfilePage: () => void,
 }) {
     return (
         <MaterialMenu
@@ -116,8 +114,8 @@ function Menu({
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-            <MenuItem onClick={handleClose}>
-                <Avatar src='https://w.forfun.com/fetch/03/03f8cd3f6796daaacc1fe43ffb7704b7.jpeg' sx={{marginRight: '10px', backgroundColor: colors.secondary.DEFAULT}}/> Profile
+            <MenuItem onClick={e => {toProfilePage(); handleClose()}}>
+                <Avatar sx={{marginRight: '10px', backgroundColor: colors.secondary.DEFAULT}}/> Profile
             </MenuItem>
             <Divider />
             <MenuItem onClick={handleClose}>
@@ -157,18 +155,18 @@ export interface ILink {
 const links: ILink[] = [
     {
         to: PATH.PUBLIC.USER,
-        name: 'участники'
+        name: 'Участники'
     },
     {
         to: PATH.PUBLIC.TEAM,
-        name: 'команды'
+        name: 'Команды'
     },
     {
         to: PATH.PUBLIC.EVENT,
-        name: 'события'
+        name: 'События'
     },
     {
         to: PATH.PUBLIC.CHALLENGE,
-        name: 'соревнования'
+        name: 'Соревнования'
     },
 ];

@@ -1,45 +1,42 @@
 import React, { ReactEventHandler, ReactNode, useEffect, useState } from 'react'
 import { GridCellParams, GridColDef, GridRenderCellParams, GridTreeNodeWithRender } from '@mui/x-data-grid/models';
-import { ITeam, ITeamBody, ITeamCreateRequest } from '../../../interfaces/team';
+import { ITeam, ITeamAddMemberRequest, ITeamBody, ITeamCreateRequest, ITeamDeleteMemberRequest, ITeamsRequest } from '../../../interfaces/team';
 import { useDataGrid } from '../../../components/data-grid/useDataGrid';
 import { IFieldInit, useAddData } from '../../../components/data-grid/useAddData';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import DataGrid from '../../../components/data-grid';
 import { Button, Grid, IconButton, Stack, Typography } from '@mui/material';
-import { IUser } from '../../../interfaces/user';
 import { Link } from 'react-router-dom';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddModal from '../../../components/data-grid/addModal';
-import Team from '../../../services/team';
+import api from '../../../api';
+import { useApi, useDataApi } from '../../../api/hook';
+import { IUser } from '../../../interfaces/user';
 
 const AdminTeamPage = () => {
 
-  const [data, setData] = useState<ITeam[]>([])
+  const teams = useDataApi<ITeamsRequest, ITeam[]>([], api.team.getAll);
+  const createTeam = useApi<ITeamCreateRequest, ITeam>(api.team.create);
+  const deleteTeam = useApi<string, void>(api.team.deleteTeam);
 
-  const dataState = useDataGrid<ITeam>(data, columns);
+  const dataState = useDataGrid<ITeam>(teams.data, columns);
   const addObject = useAddData(addFields);
+  
   const add = () => {
-    // setData(prev => (
-    //   [...prev, {
-    //     id: id.toString(),
-    //     ...addObject.dto() as ITeamBody,
-    //   }]
-    // ))
-    // addObject.setInit();
-    Team.create(addObject.dto() as ITeamCreateRequest)
+    createTeam.fetchData(addObject.dto() as ITeamCreateRequest)
   }
-  const onDelete = (ids: string[]) => {
-    setData(prev => prev.filter(e => !ids.includes(e.id)));
+  const onDelete = async (ids: string[]) => {
+    // setData(prev => prev.filter(e => !ids.includes(e.id)));
+    await Promise.all(ids.map(id => deleteTeam.fetchData(id)));
+    teams.fetchData();
   }
   const saveChanges = () => {
-    console.log(dataState.changedRowsIds);
+    // console.log(dataState.changedRowsIds);
   }
 
   useEffect(() => {
-    (async() => {
-      setData(await Team.getAll())
-    })()
+    teams.fetchData();
   }, [])
 
 
@@ -193,10 +190,17 @@ function RenderMembersCell(params: GridCellParams) {
     defaultValue: '',
     required: true,
   }]);
+
+  const deleteUserFromTeam = useApi<ITeamDeleteMemberRequest, IUser>(api.team.deleteUserFromTeam);
+  const addUserToTeam = useApi<ITeamAddMemberRequest, IUser>(api.team.addUserToTeam);
+
   return (
     <Stack sx={{mb: 2}}>
       <>
-        <AddModal open={showAdd} setOpen={setShowAdd} onSubmit={() => memberAddOnClickSubmit(addObject.dto().id as string, id)} addObject={addObject}/>
+        <AddModal open={showAdd} setOpen={setShowAdd} onSubmit={
+          () => addUserToTeam.fetchData({userId: addObject.dto().id as string, teamId: id})
+          .then((data) => data && window.location.reload())
+        } addObject={addObject}/>
       </>
       <div>
         <IconButton sx={{width: '20px', margin: 0, padding: 0}} onClick={e => memberAddOnClick(e, setShowAdd)}>
@@ -211,7 +215,10 @@ function RenderMembersCell(params: GridCellParams) {
             <Grid key={e + idx} container gap={1} borderBottom='1px solid gray'>
               {/* <div style={{marginTop: '5px'}} key={e.name}><Link style={ls} to='#'>{e.id}</Link> {e.name} {e.surname} </div> */}
               <Typography>{e}</Typography>
-              <IconButton sx={{width: '20px', margin: 0, padding: 0}} onClick={(_e) => memberDeleteOnClick(_e, e, id)}>
+              <IconButton sx={{width: '20px', margin: 0, padding: 0}} onClick={(_e) => {
+                _e.stopPropagation();
+                deleteUserFromTeam.fetchData({userId: e, teamId: id});
+              }}>
                 <DeleteOutlineIcon style={{
                   cursor: 'pointer'
                 }} color='error' sx={{width: '20px'}}/>
@@ -224,33 +231,7 @@ function RenderMembersCell(params: GridCellParams) {
   );
 }
 
-const memberDeleteOnClick = (e: React.FormEvent<HTMLButtonElement>, userId: string, teamId: string) => {
-  e.stopPropagation();
-  Team.deleteUserFromTeam(userId, teamId);
-}
 const memberAddOnClick = (e: React.FormEvent<HTMLButtonElement>, setShowAdd: (v: boolean) => void) => {
   e.stopPropagation();
   setShowAdd(true);
 }
-const memberAddOnClickSubmit = (userId: string, teamId: string) => {
-  Team.addUserToTeam(userId, teamId);
-}
-
-/*
-    {
-      id: '1',
-      title: "Чупапиксы",
-      members: [
-        '12312312',
-        '12312312',
-        '12312312',
-        '12312312',
-        '12312312',
-      ],
-      rating: 4.4,
-      info: 'НИЯУ МИФИ ИИКС ЭП',
-      contacts: '8 800 555 35 35',
-      preview: 'default',
-      captainId: '12',
-    }
-*/

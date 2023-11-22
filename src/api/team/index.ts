@@ -1,19 +1,24 @@
 import endpoints from "../endpoints";
 import { instance } from "../instance";
-import type { IUser, IUserCreateRequest, IUserEditRequest, IUserLoginRequest, IUserLoginResponse, IUserRegistrationRequest, IUserRegistrationResponse, IUsersResponse } from "../../interfaces/user";
-import { ITeamAddMemberRequest, ITeamCreateRequest, ITeamsResponse } from "../../interfaces/team";
+import { ITeam, ITeamSendInviteRequest, ITeamCreateRequest, ITeamDeleteMemberRequest, ITeamAddMemberRequest } from "../../interfaces/team";
 
-export const getAll = (): Promise<ITeamsResponse> =>
-  instance.get(endpoints.TEAM.ALL)
+export const getAll = () =>
+  instance.get<ITeam[]>(endpoints.TEAM.ALL)
 
-export const create = (data: ITeamCreateRequest) =>
+export const getMy = () =>
+  instance.get<ITeam[]>(endpoints.TEAM.MY)
+
+export const create = (data?: ITeamCreateRequest) =>
   instance.post(endpoints.TEAM.CREATE, data)
 
-export const deleteUserFromTeam = (userId: string, teamId: string) =>
-  instance.delete(endpoints.TEAM.DELETE_USER(userId, teamId))
+export const deleteUserFromTeam = (ids?: ITeamDeleteMemberRequest) =>
+  instance.delete(endpoints.TEAM.DELETE_USER(ids?.userId, ids?.teamId))
 
-export const addUserToTeam = (userId: string, teamId: string) =>
-  instance.post(endpoints.TEAM.ADD_USER(userId, teamId))
+export const deleteTeam = (id?: string) =>
+  instance.delete(endpoints.TEAM.DELETE_TEAM(id))
 
-export const sendInviteCode = (data: ITeamAddMemberRequest) =>
-  instance.post(endpoints.TEAM.INVITE_CODE)
+export const addUserToTeam = (ids?: ITeamAddMemberRequest) =>
+  instance.post(endpoints.TEAM.ADD_USER(ids?.userId, ids?.teamId))
+
+export const sendInviteCode = (data?: ITeamSendInviteRequest) =>
+  instance.post<void>(endpoints.TEAM.INVITE_CODE, data)

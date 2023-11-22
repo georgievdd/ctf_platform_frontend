@@ -3,6 +3,9 @@ import {ILink} from "./components/header";
 export const addTokenToBuffer = () => {
     navigator.clipboard.writeText(window.localStorage.getItem("accessJwt")!)
 }
+export const addStringBuffer = (data: string) => {
+    navigator.clipboard.writeText(data)
+}
 
 export function prepareLinks(links: ILink[]) {
     const linkObject: { [key: string]: { index: number } } = {};

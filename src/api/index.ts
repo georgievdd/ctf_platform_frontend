@@ -1,9 +1,11 @@
-import * as user from './user/index';
-import * as team from './team/index';
+import * as user from './user';
+import * as team from './team';
+import * as auth from './auth';
 
 const api = {
   user,
   team,
+  auth,
 }
 
 export default api;

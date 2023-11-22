@@ -12,20 +12,21 @@ import AdminUser from '../pages/admin/user';
 import AdminTeam from '../pages/admin/team';
 import AdminEvent from '../pages/admin/event';
 import AdminChallenge from '../pages/admin/challenge';
+import ProfileMePage from '../pages/auth/profile';
 
 
 export const Router = createBrowserRouter([
     {
-      path: PATH.LOGIN,
+      path: PATH.AUTH.LOGIN,
       element: <Login/>,
     },
     {
-      path: PATH.REGISTRATION,
+      path: PATH.AUTH.REGISTRATION,
       element: <Registartion/>,
     },
     {
       path: '/',
-      element: <Navigate to={PATH.LOGIN} />
+      element: <Navigate to={PATH.AUTH.LOGIN} />
     },
     {
       path: PATH.PUBLIC.HOME,
@@ -38,6 +39,10 @@ export const Router = createBrowserRouter([
         {
           path: PATH.PUBLIC.USER,
           element: <PublicUser />
+        },
+        {
+          path: PATH.PUBLIC.ME,
+          element: <ProfileMePage />
         },
         {
           path: PATH.PUBLIC.EVENT,

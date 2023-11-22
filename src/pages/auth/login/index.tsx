@@ -12,8 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import User from '../../../services/user';
 import { PATH } from '../../../consts';
+import { useApi } from '../../../api/hook';
+import api from '../../../api';
+import { ICheckAuthRequest, IUserLoginRequest, IUserLoginResponse } from '../../../interfaces/user';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -21,18 +23,24 @@ const defaultTheme = createTheme();
 export const Login = () => {
 
   const navigate = useNavigate();
+  const login = useApi<IUserLoginRequest, IUserLoginResponse>(api.auth.login);
+  const checkAuth = useApi<ICheckAuthRequest, boolean>(api.auth.checkAuth);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    User.login({
+    login.fetchData({
       email: data.get('email') as string,
       password: data.get('password') as string
-    }, () => navigate(PATH.PUBLIC.HOME));
+    }).then(data => {
+      if (!data) return;
+      localStorage.setItem('accessJwt', data!!.accessJwt);
+      navigate(PATH.PUBLIC.HOME);
+    });
   };
 
   useEffect(() => {
-    User.checkAuth(() => navigate(PATH.PUBLIC.HOME))
+    checkAuth.fetchData()
   }, []);
 
   return (
@@ -93,7 +101,7 @@ export const Login = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link to={PATH.REGISTRATION}>
+                <Link to={PATH.AUTH.REGISTRATION}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

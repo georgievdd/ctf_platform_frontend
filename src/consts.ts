@@ -19,9 +19,12 @@ export const THEME = {
 const PUBLIC = '/public';
 const ADMIN = '/admin';
 export const PATH = {
-  LOGIN: '/login',
-  REGISTRATION: '/registration',
+  AUTH: {
+    LOGIN: '/login',
+    REGISTRATION: '/registration',
+  },
   PUBLIC: {
+    ME: PUBLIC + '/me',
     HOME: PUBLIC,
     TEAM: PUBLIC + '/team',
     USER: PUBLIC + '/user',

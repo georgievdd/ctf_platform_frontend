@@ -2,6 +2,7 @@ import * as React from 'react';
 import { styled } from '@mui/system';
 import { buttonClasses } from '@mui/base/Button';
 import { Tabs } from '@mui/base/Tabs';
+import { Box, Container, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { Tab as BaseTab, tabClasses } from '@mui/base/Tab';
 import { TabsList as BaseTabsList } from '@mui/base/TabsList';
 import { useTheme } from '../../theme';
@@ -9,8 +10,33 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import {ILink} from "../header";
 import {useEffect, useState} from "react";
 import {prepareLinks} from "../../datafunc";
+import MenuIcon from '@mui/icons-material/Menu';
 
-export default function NavLinks({ links }: { links: ILink[] }) {
+const drawerWidth = 240;
+export default function NavLinks({ links, window }: { links: ILink[], window?: () => Window }) {
+
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
+  const container = window !== undefined ? () => window().document.body : undefined;
+  const drawer = (
+      <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+        <Typography variant="h6" sx={{ my: 2 }}>
+        CTF
+        </Typography>
+        <Divider />
+        <List>
+          {links.map(({name, to}) => (
+            <ListItem key={name} disablePadding>
+              <ListItemButton onClick={() => navigate(to)} sx={{ textAlign: 'center' }}>
+                <ListItemText primary={name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+  );
 
   const currentSelect = prepareLinks(links);
   const { pathname } = useLocation();
@@ -79,20 +105,48 @@ export default function NavLinks({ links }: { links: ILink[] }) {
 
   return (
     <div>
-      <Tabs
-        defaultValue={getChecked()}
-        selectionFollowsFocus
-        onChange={e => {
-          e?.preventDefault();
-          navigate((e!.target as HTMLElement).id);
-        }}
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        onClick={handleDrawerToggle}
+        sx={{display: {xs: 'block', md: 'none', lg: 'none'}, ml: '20px'}}
       >
-        <TabsList>
-          {links.map(({name, to}, idx) => (
-              <Tab id={to} key={name}>{name}</Tab>
-          ))}
-        </TabsList>
-      </Tabs>
+        <MenuIcon />
+      </IconButton>
+      <Box sx={{display: {xs: 'none', md: 'block', lg: 'block'}}}>
+        <Tabs
+          defaultValue={getChecked()}
+          selectionFollowsFocus
+          onChange={e => {
+            e?.preventDefault();
+            navigate((e!.target as HTMLElement).id);
+          }}
+        >
+          <TabsList>
+            {links.map(({name, to}, idx) => (
+                <Tab id={to} key={name}>{name}</Tab>
+            ))}
+          </TabsList>
+        </Tabs>
+      </Box>
+      <nav>
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: 'block', md: 'none' }, // Боковое меню отображается на экранах меньше 600px
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+          >
+          {drawer}
+          </Drawer>
+      </nav>
     </div>
   );
 }
