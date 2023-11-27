@@ -41,29 +41,21 @@ export default function NavLinks({ links, window }: { links: ILink[], window?: (
   const currentSelect = prepareLinks(links);
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    console.log(pathname)
-  }, [pathname]);
-
   const { colors } = useTheme();
   const navigate = useNavigate();
-  const Tab = styled(BaseTab)`
-    color: ${colors.primary.DEFAULT};
-    cursor: pointer;
-    font-size: 0.875rem;
-    font-weight: bold;
-    background-color: transparent;
-    width: 100%;
-    padding: 12px;
-    margin: 6px;
-    border: none;
-    border-radius: 7px;
-    display: flex;
-    justify-content: center;
-
-    &:hover {
-      background-color: ${colors.primary[600]};
-    }
+  const Tab = styled(BaseTab)(({ theme }) => `
+  color: ${theme.palette.mode === 'light' ? colors.primary[300] : theme.palette.text.primary};
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: bold;
+  background-color: transparent;
+  width: 100%;
+  padding: 12px;
+  margin: 6px;
+  border: none;
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
 
     &:focus {
       color: ${colors.primary[100]};
@@ -72,14 +64,14 @@ export default function NavLinks({ links, window }: { links: ILink[], window?: (
 
     &.${tabClasses.selected} {
       background-color: ${colors.primary[300]};
-      color: ${colors.secondary.DEFAULT};
+      color: ${theme.palette.mode === 'light' ? colors.secondary.DEFAULT : theme.palette.text.primary};
     }
 
     &.${buttonClasses.disabled} {
       opacity: 0.5;
       cursor: not-allowed;
     }
-  `;
+  `);
 
   const TabsList = styled(BaseTabsList)(
     ({ theme }) => `
@@ -137,10 +129,10 @@ export default function NavLinks({ links, window }: { links: ILink[], window?: (
             open={mobileOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
+                keepMounted: true,
             }}
             sx={{
-              display: { xs: 'block', md: 'none' }, // Боковое меню отображается на экранах меньше 600px
+              display: { xs: 'block', md: 'none' },
               '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
             }}
           >

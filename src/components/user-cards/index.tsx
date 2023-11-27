@@ -27,16 +27,16 @@ const UserCards = ({users, pagination} : {users: IUser[], pagination: ReactNode}
             <Grid item xs={3}><Typography>Контакты</Typography></Grid>
           </Grid>
       </Paper>
-      <Paper sx={{textAlign: 'center'}}>
         {users.map((user, idx) => (
+      <Paper sx={{mb: 2, textAlign: 'center'}}>
             <Grid key={user.id} sx={{p: 1}} container justifyContent='space-evenly'>
               <Grid item xs={3} sx={border}><Typography sx={fs}>{user.name}</Typography></Grid>
               <Grid item xs={3} sx={border}><Typography sx={fs}>{user.surname}</Typography></Grid>
               <Grid item xs={3} sx={border}><Typography sx={{...fs, color: colors.highligh}}>{user.rating}</Typography></Grid>
               <Grid item xs={3}><Typography sx={{fontSize: '12px'}}>{user.email}</Typography></Grid>
             </Grid>
-          ))}
       </Paper>
+          ))}
     <Space h={'10px'} />
     {pagination}
     <Space h={'10px'} />

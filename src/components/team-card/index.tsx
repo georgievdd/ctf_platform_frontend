@@ -24,16 +24,15 @@ const TeamCard = ({data, inviteOnClick} : {
   data: ITeam,
   inviteOnClick?: (data: ITeam) => void,
 }) => {
-
   const matches = useMediaQuery('(min-width:1180px)');
-  const { colors } = useTheme();
+  const { colors, theme } = useTheme();
   const text = {
     fontSize: '20px',
     fontWeight: '600',
-    color: colors.secondary[50]
+    color: theme.palette.text.primary,
   }
-  const descript = { 
-    color: '#6E7F80',
+  const descript = {
+    color: colors.gray.DEFAULT,
     fontSize: '16px',
   };
   const highlight = {
@@ -45,7 +44,6 @@ const TeamCard = ({data, inviteOnClick} : {
       <Paper sx={{
         padding: '15px',
         borderRadius: "10px",
-        backgroundColor: colors.primary[200]
       }} elevation={6}>
         <Grid container>
           <Grid item xs={matches ? (inviteOnClick ? 3 : 4) : 12}><img

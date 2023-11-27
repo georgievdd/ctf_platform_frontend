@@ -42,11 +42,11 @@ const ProfileMePage = () => {
             <Space h='10px'/>
             <Typography color={colors.gray[100]} variant='h5'>{user?.email}</Typography>
           </div>
-            <Grid container display='flex' spacing={2} mt={10}>
+            <Grid container display='flex' spacing={2} mt={10} justifyContent='center'>
               <Grid item xs={6}>
                 <Grid display='flex' justifyContent='space-between'>
                   <Typography variant='h3'>Мои команды</Typography>
-                  <Button variant='contained' color='secondary' onClick={() => setShowAdd(true)}>
+                  <Button variant='contained' color='success' onClick={() => setShowAdd(true)}>
                     <GroupAddIcon sx={{marginRight: '5px'}}/>
                     Создать
                   </Button>
@@ -67,9 +67,9 @@ const ProfileMePage = () => {
                   ))}
                 </List>
               </Grid>
-              <Grid item xs={6} sx={{textAlign: 'center'}}>
+              {/* <Grid item xs={6} sx={{textAlign: 'center'}}>
                 <Typography variant='h1'>Что нибудь еще </Typography>
-              </Grid>
+              </Grid> */}
             </Grid>
         </Paper>
       </Container>

@@ -7,26 +7,32 @@ export const tokens = (mode: string) => ({
     ...(mode === 'dark'
         ? {
               primary: {
-                  DEFAULT: '#0C1817',
-                  50: '#1E3B39',
-                  100: '#284E4B',
-                  200: '#3B7370',
-                  300: '#4E9894',
-                  400: '#6BB3AF',
-                  500: '#90C6C3',
-                  600: '#B5D9D7',
-                  700: '#DAECEB', //DEFAULT
-                  800: '#F5FAFA',
-                  900: '#FFFFFF',
-                  950: '#FFFFFF'
+                DEFAULT: '#1C2025',
+                50: '#6B7A8E',
+                100: '#627082',
+                200: '#515C6B',
+                300: '#3F4853',
+                400: '#2E343C',
+                500: '#1C2025',
+                600: '#1A1D22',
+                700: '#181B1F',
+                800: '#15181C',
+                900: '#131619',
+                950: '#121518'
               },
-              secondary: {
-                DEFAULT: '#31544E', //'#57948A',
-                50: '#57948A',
-                100: '#4F887E',
-                200: '#406E66',
-                300: '#31544E',
-                400: '#1C312D',
+              secondary:{
+                DEFAULT: '#32363D',
+                50: '#000000',
+                100: '#191B1E',
+                200: '#32363D',
+                300: '#4B525C',
+                400: '#646D7B',
+                500: '#778191',
+                600: '#8E96A3',
+                700: '#A4ABB5',
+                800: '#BBC0C7',
+                900: '#C6CAD1',
+                950: '#646D7B',
               },
               black: {
                   DEFAULT: '#000000',
@@ -45,8 +51,8 @@ export const tokens = (mode: string) => ({
                   100: '#F7F7F7',
               },
               gray: {
-                  DEFAULT: '#3C3C3C',
-                  100: '#646C6C',
+                DEFAULT: '#9BB4B5',
+                100: '#646C6C',
               },
               accentMain: '#0F0E0E',
               borderColor: '#3C3C3C',
@@ -94,7 +100,7 @@ export const tokens = (mode: string) => ({
                   900: '#000000',
               },
               gray: {
-                DEFAULT: '#3C3C3C',
+                DEFAULT: '#6E7F80',
                 100: '#646C6C',
               },
               accentMain: '#F7F7F7',
@@ -103,105 +109,6 @@ export const tokens = (mode: string) => ({
               highligh: '#DD1313',
           }),
 })
-
-// export const tokens = (mode: string) => ({
-//     ...(mode === 'dark'
-//         ? {
-//             primary: {
-//                 DEFAULT: '#6B7280',
-//                 50: '#000000',
-//                 100: '#050506',
-//                 200: '#1E2024',
-//                 300: '#383C43',
-//                 400: '#515761',
-//                 500: '#6B7280',
-//                 600: '#7F8694',
-//                 700: '#969BA7',
-//                 800: '#ACB0BA',
-//                 900: '#C2C5CC',
-//                 950: '#CDD0D5'
-//             },
-//               secondary: {
-//                 DEFAULT: '#8B5CF6',
-//                 50: '#8B5CF6',
-//                 100: '#A783F8',
-//                 200: '#C2A9FA',
-//                 300: '#DED0FC',
-//                 400: '#EBE3FD',
-//               },
-//               black: {
-//                   DEFAULT: '#000000',
-//                   100: '#000000',
-//                   200: '#000000',
-//                   300: '#000000',
-//                   400: '#000000',
-//                   500: '#0F0E0E',
-//                   600: '#292929',
-//                   700: '#3D3D3D',
-//                   800: '#525252',
-//                   900: '#5C5C5C',
-//               },
-//               white: {
-//                   DEFAULT: '#FFFFFF',
-//                   100: '#F7F7F7',
-//               },
-//               gray: {
-//                   DEFAULT: '#3C3C3C',
-//               },
-//               accentMain: '#0F0E0E',
-//               borderColor: '#3C3C3C',
-//               blue: '#1900D5',
-//               highligh: '#DD1313',
-//           }
-//         : {
-//               white: {
-//                   DEFAULT: '#FFFFFF',
-//                   100: '#F7F7F7',
-//                   200: '#D1D1D1',
-//               },
-//             primary: {
-//                 DEFAULT: '#6B7280',
-//                 50: '#CDD0D5',
-//                 100: '#C2C5CC',
-//                 200: '#ACB0BA',
-//                 300: '#969BA7',
-//                 400: '#7F8694',
-//                 500: '#6B7280',
-//                 600: '#515761',
-//                 700: '#383C43',
-//                 800: '#1E2024',
-//                 900: '#050506',
-//                 950: '#000000'
-//             },
-//             secondary: {
-//                 DEFAULT: '#8B5CF6',
-//                 50: '#EBE3FD',
-//                 100: '#DED0FC',
-//                 200: '#C2A9FA',
-//                 300: '#A783F8',
-//                 400: '#8B5CF6',
-//             },
-//               black: {
-//                   DEFAULT: '#000000',
-//                   100: '#525252',
-//                   200: '#3D3D3D',
-//                   300: '#292929',
-//                   400: '#141414',
-//                   500: '#000000',
-//                   600: '#000000',
-//                   700: '#000000',
-//                   800: '#000000',
-//                   900: '#000000',
-//               },
-//               gray: {
-//                   DEFAULT: '#3C3C3C',
-//               },
-//               accentMain: '#F7F7F7',
-//               borderColor: '#D1D1D1',
-//               blue: '#1900D5',
-//               highligh: '#DD1313',
-//           }),
-// })
 
 export const themeSettings: any = (mode: string) => {
     const colors = tokens(mode)
@@ -219,6 +126,9 @@ export const themeSettings: any = (mode: string) => {
                       neutral: {
                           dark: colors.black[500],
                           light: colors.white[100],
+                      },
+                      background: {
+                        paper: colors.secondary.DEFAULT
                       },
                   }
                 : {
@@ -284,7 +194,7 @@ export const themeSettings: any = (mode: string) => {
                 fontFamily: [
                     'Montserrat', 
                     'sans-serif',
-                  ].join(','), 
+                  ].join(','),
                 fontSize: 15,
                 fontWeight: 600,
             },

@@ -8,7 +8,7 @@ const TEAM = {
   CREATE: team,// + '/new',
   DELETE_USER: (userId?: string, teamId?: string) =>  `/admin/user/${userId}/team/${teamId}`,
   ADD_USER: (userId?: string, teamId?: string) => `/admin/user/${userId}/team/${teamId}`,
-  INVITE_CODE: team + '/add',
+  INVITE_CODE: team + '/join',
   MY: team + '/my',
   DELETE_TEAM: (id?: string) => `/admin/team/${id}`,
 }

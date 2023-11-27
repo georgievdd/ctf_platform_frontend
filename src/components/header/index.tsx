@@ -62,7 +62,7 @@ export function Header({user}: {user: IUser}) {
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}
                         >
-                            <Avatar sx={{width: '60px', height: '60px', marginTop: '-5px', backgroundColor: colors.secondary.DEFAULT}} src='https://w.forfun.com/fetch/03/03f8cd3f6796daaacc1fe43ffb7704b7.jpe'>
+                            <Avatar sx={{width: '60px', height: '60px', marginTop: '-5px', backgroundColor: colors.secondary[400]}} src='https://w.forfun.com/fetch/03/03f8cd3f6796daaacc1fe43ffb7704b7.jpe'>
                                 {user.name[0] + user.surname[0]}
                             </Avatar>
                         </IconButton>
@@ -115,7 +115,7 @@ function Menu({
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
             <MenuItem onClick={e => {toProfilePage(); handleClose()}}>
-                <Avatar sx={{marginRight: '10px', backgroundColor: colors.secondary.DEFAULT}}/> Profile
+                <Avatar sx={{marginRight: '10px', backgroundColor: colors.secondary[400]}}/> Profile
             </MenuItem>
             <Divider />
             <MenuItem onClick={handleClose}>
