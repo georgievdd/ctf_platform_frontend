@@ -7,6 +7,7 @@ import AdminWrapper from '../pages/admin/AdminWrapper';
 import PublicUser from '../pages/public/user';
 import PublicTeam from '../pages/public/team';
 import PublicTask from '../pages/public/task';
+import PublicTaskId from '../pages/public/task/[id]';
 import PublicEvent from '../pages/public/event';
 import AdminUser from '../pages/admin/user';
 import AdminTeam from '../pages/admin/team';
@@ -47,6 +48,10 @@ export const Router = createBrowserRouter([
         {
           path: PATH.PUBLIC.TASK,
           element: <PublicTask />
+        },
+        {
+          path: PATH.PUBLIC.TASK + '/:id',
+          element: <PublicTaskId />
         },
         {
           path: PATH.PUBLIC.EVENT,
