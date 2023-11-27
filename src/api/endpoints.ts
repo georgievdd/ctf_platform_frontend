@@ -5,7 +5,7 @@ const task = '/task'
 const TEAM = {
   TEAM: team,
   ALL: team + '/all',
-  CREATE: team + '/new',
+  CREATE: team, // + '/new',
   DELETE_USER: (userId?: string, teamId?: string) =>  `/admin/user/${userId}/team/${teamId}`,
   ADD_USER: (userId?: string, teamId?: string) => `/admin/user/${userId}/team/${teamId}`,
   INVITE_CODE: team + '/add',
