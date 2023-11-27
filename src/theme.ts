@@ -282,7 +282,7 @@ export const themeSettings: any = (mode: string) => {
             },
             h6: {
                 fontFamily: [
-                    'Montserrat', 
+                    'Montserrat',  
                     'sans-serif', 
                   ].join(','),
                 fontSize: 15,
