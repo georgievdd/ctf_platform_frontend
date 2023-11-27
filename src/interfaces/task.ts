@@ -1,5 +1,4 @@
 export interface ITaskBody {
-  status: 'archive' | 'run' | 'new';
   type: 'image' | 'text' | 'file';
   body: string;
   description: string;
@@ -10,6 +9,9 @@ export interface ITaskBody {
 export interface ITask extends ITaskBody {
   id: string;
 }
+
+
+export interface ITaskRequest {}
 
 export interface ITaskCreate {
   type: 'image' | 'text' | 'file';

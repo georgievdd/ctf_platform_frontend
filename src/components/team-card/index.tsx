@@ -49,7 +49,7 @@ const TeamCard = ({data, inviteOnClick} : {
       }} elevation={6}>
         <Grid container>
           <Grid item xs={matches ? (inviteOnClick ? 3 : 4) : 12}><img
-            src={require(`../../res/img/${data.preview}.svg`)}
+            src={require(`../../res/img/team/${data.preview}.svg`)}
             className='teame-img'
           /></Grid>
           <Grid item xs={matches ? (inviteOnClick ? 6 : 8) : 12}><Box>

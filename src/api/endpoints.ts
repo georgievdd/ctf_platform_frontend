@@ -1,5 +1,6 @@
 const user = '/user'
 const team = '/team'
+const task = '/task'
 
 const TEAM = {
   TEAM: team,
@@ -24,6 +25,12 @@ const USER = {
   PROFILE: user + '/me',
 };
 
+const TASK = {
+  TASK: task,
+}
+
+
+
 const ADMIN = {
   USER: {
     DELETE: (id?: string) => `/admin/user/${id}`,
@@ -36,4 +43,5 @@ export default {
   AUTH,
   TEAM,
   ADMIN,
+  TASK,
 };

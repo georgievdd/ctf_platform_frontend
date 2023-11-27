@@ -6,12 +6,12 @@ import { PATH } from '../consts';
 import AdminWrapper from '../pages/admin/AdminWrapper';
 import PublicUser from '../pages/public/user';
 import PublicTeam from '../pages/public/team';
+import PublicTask from '../pages/public/task';
 import PublicEvent from '../pages/public/event';
-import PublicChallenge from '../pages/public/challenge';
 import AdminUser from '../pages/admin/user';
 import AdminTeam from '../pages/admin/team';
+import AdminTask from '../pages/admin/event';
 import AdminEvent from '../pages/admin/event';
-import AdminChallenge from '../pages/admin/challenge';
 import ProfileMePage from '../pages/auth/profile';
 
 
@@ -45,12 +45,12 @@ export const Router = createBrowserRouter([
           element: <ProfileMePage />
         },
         {
-          path: PATH.PUBLIC.EVENT,
-          element: <PublicEvent />
+          path: PATH.PUBLIC.TASK,
+          element: <PublicTask />
         },
         {
-          path: PATH.PUBLIC.CHALLENGE,
-          element: <PublicChallenge />
+          path: PATH.PUBLIC.EVENT,
+          element: <PublicEvent />
         }
       ]
     },
@@ -67,12 +67,12 @@ export const Router = createBrowserRouter([
           element: <AdminTeam />
         },
         {
-          path: PATH.ADMIN.EVENT,
-          element: <AdminEvent />
+          path: PATH.ADMIN.TASK,
+          element: <AdminTask />
         },
         {
-          path: PATH.ADMIN.CHALLENGE,
-          element: <AdminChallenge />
+          path: PATH.ADMIN.EVENT,
+          element: <AdminEvent />
         },
       ]
     }

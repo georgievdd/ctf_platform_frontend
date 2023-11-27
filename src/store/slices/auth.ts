@@ -7,8 +7,19 @@ import type { IStore } from '..';
 export interface IUserStore {
   user: IUser | null;
 };
+
+const USER: IUser = {
+  name: 'name',
+  surname: 'surname',
+  email: 'email',
+  id: 'id',
+  admin: false,
+  teams: [],
+  rating: 0,
+}
+
 const initialState: IUserStore = {
-  user: null,
+  user: USER,
 };
 export const authSlice = createSlice({
   name: 'auth',

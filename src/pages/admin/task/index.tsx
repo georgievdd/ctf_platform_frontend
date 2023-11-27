@@ -2,7 +2,7 @@ import React from 'react'
 
 const AdminChallengePage = () => {
   return (
-    <div>AdminChallengePage</div>
+    <div>TASK</div>
   )
 }
 

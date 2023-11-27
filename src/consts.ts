@@ -28,14 +28,14 @@ export const PATH = {
     HOME: PUBLIC,
     TEAM: PUBLIC + '/team',
     USER: PUBLIC + '/user',
-    CHALLENGE: PUBLIC + '/challenge',
     EVENT: PUBLIC + '/event',
+    TASK: PUBLIC + '/task',
   },
   ADMIN: {
     HOME: ADMIN,
     TEAM: ADMIN + '/team',
     USER: ADMIN + '/user',
-    CHALLENGE: ADMIN + '/challenge',
     EVENT: ADMIN + '/event',
+    TASK: ADMIN + '/task',
   }
 }

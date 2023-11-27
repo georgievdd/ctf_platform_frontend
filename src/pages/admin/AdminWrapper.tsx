@@ -81,8 +81,8 @@ const AdminWrapper = () => {
         <List>
         <NavItem theme={theme} current={pathname === PATH.ADMIN.USER} Icon={PersonIcon} text='пользователи' open={open} onClick={() => navigate(PATH.ADMIN.USER)}/>
         <NavItem theme={theme} current={pathname === PATH.ADMIN.TEAM} Icon={GroupIcon} text='команды' open={open} onClick={() => navigate(PATH.ADMIN.TEAM)}/>
-        <NavItem theme={theme} current={pathname === PATH.ADMIN.EVENT} Icon={EventIcon} text='события' open={open} onClick={() => navigate(PATH.ADMIN.EVENT)}/>
-        <NavItem theme={theme} current={pathname === PATH.ADMIN.CHALLENGE} Icon={ChellengeIcon} text='соревнования' open={open} onClick={() => navigate(PATH.ADMIN.CHALLENGE)}/>
+        <NavItem theme={theme} current={pathname === PATH.ADMIN.TASK} Icon={EventIcon} text='Задания' open={open} onClick={() => navigate(PATH.ADMIN.TASK)}/>
+        <NavItem theme={theme} current={pathname === PATH.ADMIN.EVENT} Icon={ChellengeIcon} text='соревнования' open={open} onClick={() => navigate(PATH.ADMIN.EVENT)}/>
         </List>
         <Divider />
         <NavItem Icon={theme.palette.mode === THEME.DARK ? DarkMode : LightMode} text='тема' open={open} onClick={colorMode.toggleColorMode}/>

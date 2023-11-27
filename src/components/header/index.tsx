@@ -163,10 +163,10 @@ const links: ILink[] = [
     },
     {
         to: PATH.PUBLIC.EVENT,
-        name: 'События'
+        name: 'Соревнования'
     },
     {
-        to: PATH.PUBLIC.CHALLENGE,
-        name: 'Соревнования'
+        to: PATH.PUBLIC.TASK,
+        name: 'Задания'
     },
 ];
