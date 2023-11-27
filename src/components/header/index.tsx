@@ -14,7 +14,6 @@ import { Box, Container, Drawer, Grid, List, ListItem, ListItemButton, ListItemT
 import { IUser } from '../../interfaces/user';
 import ThemeSwitcherComponent from "../theme-switcher";
 import Typography from "@mui/material/Typography";
-import {tokens, useTheme} from "../../theme";
 import NavLinks from '../navigation';
 import { PATH } from '../../consts';
 import {addTokenToBuffer} from "../../datafunc";
@@ -24,7 +23,6 @@ export function Header({user}: {user: IUser}) {
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const { colors } = useTheme();
     
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -50,7 +48,6 @@ export function Header({user}: {user: IUser}) {
                         &&<Typography variant='h6' style={{
                             minWidth: 100,
                             marginTop: 0,
-                            color: colors.highligh,
                             textAlign: 'end'
                         }}>админитратор</Typography>}
                     </Grid>
@@ -62,7 +59,7 @@ export function Header({user}: {user: IUser}) {
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}
                         >
-                            <Avatar sx={{width: '60px', height: '60px', marginTop: '-5px', backgroundColor: colors.secondary.DEFAULT}} src='https://w.forfun.com/fetch/03/03f8cd3f6796daaacc1fe43ffb7704b7.jpe'>
+                            <Avatar sx={{width: '60px', height: '60px', marginTop: '-5px'}} src='https://w.forfun.com/fetch/03/03f8cd3f6796daaacc1fe43ffb7704b7.jpe'>
                                 {user.name[0] + user.surname[0]}
                             </Avatar>
                         </IconButton>
@@ -74,7 +71,6 @@ export function Header({user}: {user: IUser}) {
                 anchorEl={anchorEl} 
                 handleClose={handleClose} 
                 open={open} 
-                colors={colors}
                 adminNavigate={() => navigate(PATH.ADMIN.HOME)}
                 logout={logout}
                 toProfilePage={() => navigate(PATH.PUBLIC.ME)}
@@ -89,7 +85,6 @@ function Menu({
                   anchorEl,
                   handleClose,
                   open,
-                  colors,
                   user,
                   adminNavigate,
                   logout,
@@ -98,7 +93,6 @@ function Menu({
     anchorEl: any,
     handleClose: any,
     open: any,
-    colors: any,
     user: IUser,
     adminNavigate: any,
     logout: () => void,
@@ -115,7 +109,7 @@ function Menu({
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
             <MenuItem onClick={e => {toProfilePage(); handleClose()}}>
-                <Avatar sx={{marginRight: '10px', backgroundColor: colors.secondary.DEFAULT}}/> Profile
+                <Avatar sx={{marginRight: '10px'}}/> Profile
             </MenuItem>
             <Divider />
             <MenuItem onClick={handleClose}>

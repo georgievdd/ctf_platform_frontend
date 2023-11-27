@@ -13,7 +13,6 @@ import api from '../../../api';
 
 
 const ProfileMePage = () => {
-  const { colors } = useTheme();
   const { user } = useAuth();
 
   const myTeams = useDataApi<ITeamsRequest, ITeam[]>([], api.team.getMy);
@@ -38,9 +37,9 @@ const ProfileMePage = () => {
       <Container>
         <Paper sx={{padding: "40px"}}>
           <div>
-            <Typography variant='h2'>{user?.name} {user?.surname} <span style={{color: colors.highligh}}>{user?.rating}</span></Typography>
+            <Typography variant='h2'>{user?.name} {user?.surname} <span style={{color: 'red'}}>{user?.rating}</span></Typography>
             <Space h='10px'/>
-            <Typography color={colors.gray[100]} variant='h5'>{user?.email}</Typography>
+            <Typography color={'gray'} variant='h5'>{user?.email}</Typography>
           </div>
             <Grid container display='flex' spacing={2} mt={10}>
               <Grid item xs={6}>

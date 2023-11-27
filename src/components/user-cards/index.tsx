@@ -8,7 +8,6 @@ const UserCards = ({users, pagination} : {users: IUser[], pagination: ReactNode}
 
   console.log(users)
 
-  const { colors } = useTheme();
 
   const fs: React.CSSProperties = {
     fontSize: '15px',
@@ -32,7 +31,7 @@ const UserCards = ({users, pagination} : {users: IUser[], pagination: ReactNode}
             <Grid key={user.id} sx={{p: 1}} container justifyContent='space-evenly'>
               <Grid item xs={3} sx={border}><Typography sx={fs}>{user.name}</Typography></Grid>
               <Grid item xs={3} sx={border}><Typography sx={fs}>{user.surname}</Typography></Grid>
-              <Grid item xs={3} sx={border}><Typography sx={{...fs, color: colors.highligh}}>{user.rating}</Typography></Grid>
+              <Grid item xs={3} sx={border}><Typography sx={{...fs, color: 'red'}}>{user.rating}</Typography></Grid>
               <Grid item xs={3}><Typography sx={{fontSize: '12px'}}>{user.email}</Typography></Grid>
             </Grid>
           ))}

@@ -45,10 +45,8 @@ export default function NavLinks({ links, window }: { links: ILink[], window?: (
     console.log(pathname)
   }, [pathname]);
 
-  const { colors } = useTheme();
   const navigate = useNavigate();
   const Tab = styled(BaseTab)`
-    color: ${colors.primary.DEFAULT};
     cursor: pointer;
     font-size: 0.875rem;
     font-weight: bold;
@@ -62,17 +60,17 @@ export default function NavLinks({ links, window }: { links: ILink[], window?: (
     justify-content: center;
 
     &:hover {
-      background-color: ${colors.primary[600]};
+      background-color: colors.primary[600];
     }
 
     &:focus {
-      color: ${colors.primary[100]};
-      outline: 3px solid ${colors.primary[400]};
+      color: colors.primary[100];
+      outline: 3px solid colors.primary[400];
     }
 
     &.${tabClasses.selected} {
-      background-color: ${colors.primary[300]};
-      color: ${colors.secondary.DEFAULT};
+      background-color: colors.primary[300];
+      color: colors.secondary.DEFAULT;
     }
 
     &.${buttonClasses.disabled} {
@@ -84,7 +82,7 @@ export default function NavLinks({ links, window }: { links: ILink[], window?: (
   const TabsList = styled(BaseTabsList)(
     ({ theme }) => `
     min-width: 400px;
-    background-color: ${colors.secondary.DEFAULT};
+    background-color: colors.secondary.DEFAULT;
     border-radius: 12px;
     margin-bottom: 16px;
     display: flex;

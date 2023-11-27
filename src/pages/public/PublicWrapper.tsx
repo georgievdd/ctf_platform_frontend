@@ -15,7 +15,6 @@ import { useDispatch } from 'react-redux';
 
 const PublicWrapper = () => {
   const { user } = useAuth();
-  const { colors } = useTheme();
   const profile = useApi<any, IUser>(api.auth.getProfile);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -28,7 +27,7 @@ const PublicWrapper = () => {
 
   if (!user) return <div></div>
   return (
-    <div className='background' style={{backgroundColor: colors.primary.DEFAULT, minHeight: '100vh'}}>
+    <div className='background' style={{minHeight: '100vh'}}>
       <Container>
         <Header user={user!}/>
         <Space h='20px' />

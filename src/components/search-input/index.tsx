@@ -18,11 +18,10 @@ export default function SearchInput(props: {
     placeholder: any,
 }) {
 
-    const { colors, theme } = useTheme();
+    const { theme } = useTheme();
 
     return (
-        <Paper sx={{padding: '10px', backgroundColor: (
-            theme.palette.mode === 'dark' ? colors.primary[200] : colors.primary[400])}} elevation={3}>
+        <Paper sx={{padding: '10px'}} elevation={3}>
             <Grid display='flex' justifyContent='left'>
                 <SearchIcon />
                 <input style={{
@@ -32,7 +31,7 @@ export default function SearchInput(props: {
                     marginLeft: '5px',
                     fontSize: '18px',
                     backgroundColor: 'rgba(0, 0, 0, 0)',
-                    color: colors.primary[950]
+                    // color: colors.primary[950]
                 }} {...props} type='text'/>
             </Grid>
         </Paper>
