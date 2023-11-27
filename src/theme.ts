@@ -284,7 +284,7 @@ export const themeSettings: any = (mode: string) => {
                 fontFamily: [
                     'Montserrat', 
                     'sans-serif',
-                  ].join(','),
+                  ].join(','), 
                 fontSize: 15,
                 fontWeight: 600,
             },
