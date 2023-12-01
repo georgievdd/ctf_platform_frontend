@@ -5,6 +5,7 @@ import Space from "../space";
 import './style.css'
 import {ReactComponent as CaptainMark} from '../../res/marks/captain.svg'
 import { addStringBuffer, addTokenToBuffer } from "../../datafunc";
+import EditIcon from '@mui/icons-material/Edit';
 const Mark = ({code}:{code: string}) => (
   <Tooltip title="По инвайт коду участники будут вступать в вашу команду">
     <Button style={{
@@ -19,9 +20,24 @@ const Mark = ({code}:{code: string}) => (
   </Tooltip>
 )
 
+const Edit = ({onClick}: any) => (
+  <Button style={{
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: '50px',
+    height: '50px',
+    borderRadius: '10px'
+  }} onClick={onClick}>
+    <EditIcon />
+  </Button>
+)
 
-const TeamCard = ({data, inviteOnClick} : {
+
+const TeamCard = ({data, inviteOnClick, editOnCLick, showCode} : {
   data: ITeam,
+  showCode?: boolean,
+  editOnCLick?: () => void,
   inviteOnClick?: (data: ITeam) => void,
 }) => {
   const matches = useMediaQuery('(min-width:1180px)');
@@ -40,7 +56,8 @@ const TeamCard = ({data, inviteOnClick} : {
   }
   return (
     <div style={{marginBottom: '15px', position: 'relative'}}>
-      {data.code && <Mark code={data.code}/>}
+      {showCode && data.code && <Mark code={data.code}/>}
+      {editOnCLick && data.code && <Edit onClick={editOnCLick}/>}
       <Paper sx={{
         padding: '15px',
         borderRadius: "10px",

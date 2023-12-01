@@ -19,10 +19,10 @@ export interface IUsersRequest {
 
 
 export interface IUserEditRequest {
-  id: string;
+  id?: string;
   surname: string;
   name: string;
-  teams: null | string[];
+  // teams: null | string[];
 }
 
 export interface IUserLoginRequest {

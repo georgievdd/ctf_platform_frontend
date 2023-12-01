@@ -2,16 +2,16 @@ import { ITask, ITaskRequest } from "../../interfaces/task";
 import endpoints from "../endpoints";
 import { instance } from "../instance";
 
-export const taskRow: ITask = {
-  title: 'Задание 1',
-  description: 'description of this task',
+export const taskRaw: ITask = {
+  title: 'Приделать замок',
+  description: 'Laboris sit aliqua eu mollit nulla culpa et enim. Tempor occaecat amet aliqua aliqua voluptate et quis velit non minim aute qui cillum. Nisi laborum esse tempor minim nisi amet quis ea tempor tempor.',
   complexity: 1000,
   id: '1',
-  type: 'text',
-  body: 'body of this task'
+  type: 'file',
+  body: 'file.txt'
 }
 
-export const tasksRow: ITask[] = [
+export const tasksRaw: ITask[] = [
   {
     title: 'Задание 1',
     description: 'Описание этого задания',
@@ -43,4 +43,6 @@ export const tasksRow: ITask[] = [
 
 export const getAll = (query?: ITaskRequest) =>
   instance.get<ITask[]>(endpoints.TASK.TASK, {params: query});
-  // new Promise<ITask[]>(() => [taskRow]);
+  // new Promise<ITask[]>(() => [taskRaw]);
+export const getOne = (id?: ITaskRequest) =>
+  instance.get<ITask>(`${endpoints.TASK.TASK}/${id}`);

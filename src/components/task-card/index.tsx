@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../consts';
 import { useTheme } from '@mui/material/styles';
 import { Theme } from '@mui/material/styles';
-
 const divider = (theme: Theme) => ({
   borderRight: `1px solid ${theme.palette.text.primary}`,
 });

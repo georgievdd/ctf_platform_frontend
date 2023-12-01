@@ -19,7 +19,7 @@ const USER: IUser = {
 }
 
 const initialState: IUserStore = {
-  user: USER,
+  user: null,
 };
 export const authSlice = createSlice({
   name: 'auth',

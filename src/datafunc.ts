@@ -17,12 +17,12 @@ export function prepareLinks(links: ILink[]) {
     return linkObject;
 }
 
-export const showAlert = (message: string) => {
+export const showAlert = (message: string, variant?: 'alert-danger' | 'alert-success') => {
     // Create a div element
     const alertDiv = document.createElement('div');
 
     // Apply class and message
-    alertDiv.className = 'alert-message';
+    alertDiv.className = variant || 'alert-danger';
     alertDiv.innerText = message;
 
     // Append to body

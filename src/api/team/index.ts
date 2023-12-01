@@ -22,3 +22,6 @@ export const addUserToTeam = (ids?: ITeamAddMemberRequest) =>
 
 export const sendInviteCode = (data?: ITeamSendInviteRequest) =>
   instance.post<void>(endpoints.TEAM.INVITE_CODE, data)
+
+export const edit = (data?: ITeam) =>
+  instance.put<ITeam>(endpoints.TEAM.EDIT, data)

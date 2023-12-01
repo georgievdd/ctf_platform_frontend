@@ -1,6 +1,7 @@
 const user = '/user'
 const team = '/team'
 const task = '/task'
+const event = '/event'
 
 const TEAM = {
   TEAM: team,
@@ -11,13 +12,19 @@ const TEAM = {
   INVITE_CODE: team + '/join',
   MY: team + '/my',
   DELETE_TEAM: (id?: string) => `/admin/team/${id}`,
+  EDIT: team,
 }
+
+const EVENT = {
+  EVENT: event,
+  REGISTRATION: (eventId?: string, teamId?: string) => `/ event/${eventId}/registration/${teamId}`,
+};
 
 const AUTH = {
   LOGIN: '/public/auth/login',
   REGISTRATION: '/public/auth/registration',
   CHECK: '/checkOut',
-}
+};
 
 const USER = {
   USER: user,
@@ -44,4 +51,5 @@ export default {
   TEAM,
   ADMIN,
   TASK,
+  EVENT,
 };

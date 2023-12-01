@@ -42,7 +42,7 @@ export default function TeamCardModal({
               onClick();
             }}>
               <Input 
-                placeholder='ioesjurbgisergwef'
+                placeholder='invite code'
                 type='password'
                 {...input}
                 required

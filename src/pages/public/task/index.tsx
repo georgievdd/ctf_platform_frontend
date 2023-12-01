@@ -2,7 +2,7 @@ import React from 'react';
 import { useDataApi } from '../../../api/hook';
 import { ITask, ITaskRequest } from '../../../interfaces/task';
 import api from '../../../api';
-import { taskRow, tasksRow } from '../../../api/task';
+import { taskRaw, tasksRaw } from '../../../api/task';
 import {
   Grid,
   Container,
@@ -19,12 +19,12 @@ import { useInput } from '../../../hooks';
 
 const TASK = () => {
 
-  const tasks = useDataApi<ITaskRequest, ITask[]>(tasksRow, api.task.getAll);
+  const tasks = useDataApi<ITaskRequest, ITask[]>(tasksRaw, api.task.getAll);
   const input = useInput('');
 
   return (
     <div>
-      <Typography sx={{textAlign: 'center', marginBottom: 5}} variant='h5'>Задания прошедших соревнований, доступные для тренировок</Typography>
+      {/* <Typography sx={{textAlign: 'center', marginBottom: 5}} variant='h5'>Задания прошедших соревнований, доступные для тренировок</Typography> */}
       <Grid container>
         <Grid item xs={8}><Container sx={{width: '100%'}}>
             {tasks.isLoading 

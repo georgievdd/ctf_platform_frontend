@@ -1,4 +1,4 @@
-import { ICheckAuthRequest, IUser, IUserLoginRequest, IUserLoginResponse, IUserRegistrationRequest, IUserRegistrationResponse } from "../../interfaces/user";
+import { ICheckAuthRequest, IUser, IUserEditRequest, IUserLoginRequest, IUserLoginResponse, IUserRegistrationRequest, IUserRegistrationResponse } from "../../interfaces/user";
 import endpoints from "../endpoints";
 import { instance } from "../instance";
 
@@ -13,3 +13,6 @@ export const checkAuth = (data?: ICheckAuthRequest) =>
 
 export const getProfile = () => 
   instance.get<IUser>(endpoints.USER.PROFILE);
+
+export const editProfile = (data?: IUser) =>
+  instance.put<IUser>(endpoints.USER.PROFILE, data);

@@ -115,15 +115,15 @@ function Menu({
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
             <MenuItem onClick={e => {toProfilePage(); handleClose()}}>
-                <Avatar sx={{marginRight: '10px', backgroundColor: colors.secondary[400]}}/> Profile
+                <Avatar sx={{marginRight: '10px', backgroundColor: colors.secondary[400]}}/> Профиль
             </MenuItem>
             <Divider />
-            <MenuItem onClick={handleClose}>
+            {/* <MenuItem onClick={handleClose}>
                 <ListItemIcon>
                     <Settings fontSize="small" />
                 </ListItemIcon>
                 Настройки
-            </MenuItem>
+            </MenuItem> */}
             {user.admin && 
             <MenuItem onClick={adminNavigate}>
                 <ListItemIcon>
